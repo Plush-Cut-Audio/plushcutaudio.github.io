@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://v4.elejeune.me/sitemap-index.xml
+Sitemap: https://plushcutaudio.com/sitemap-index.xml

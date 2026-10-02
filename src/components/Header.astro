@@ -1,0 +1,44 @@
+---
+import Swash from "@/components/Swash.astro";
+import Mark from "@/components/Mark.astro";
+import { site, nav } from "@/data/site";
+
+/* Which menu item is the current page */
+const here = Astro.url.pathname.replace(/\/$/, "");
+const isCurrent = (href) => here === href.replace(/\/$/, "");
+---
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__home" aria-label={`${site.name}, home`}>
+      <Mark class="site-header__mark" />
+      <span class="site-header__name wordmark">{site.name}</span>
+    </a>
+
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} class="swash-link" aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+              <Swash />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+      Menu
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="site-menu" data-menu>
+  <ul class="menu__list">
+    <li><a href="/" aria-current={isCurrent("/") ? "page" : undefined}>Home</a></li>
+    {nav.map((item) => (
+      <li><a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>{item.label}</a></li>
+    ))}
+  </ul>
+</div>

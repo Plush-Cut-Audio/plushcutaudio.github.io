@@ -1,68 +1,58 @@
-# elejeune.me — v4
+# plushcutaudio.com
 
-The fourth iteration of my portfolio. Leaner, more designed, and topped with a
-[boids](https://en.wikipedia.org/wiki/Boids) flocking simulation — a nod to the
-drone swarms I build for a living.
+The Plush Cut Audio website. Built with [Astro](https://astro.build), which turns
+the files in `src/` into a plain static website. Every push to `main` is built
+and published to GitHub Pages automatically (see `.github/workflows/ci.yml`).
+If a build fails, the live site stays on the last good version.
 
-Colour, mark and voice come from [guilyx/branding](https://github.com/guilyx/branding).
-Layout logic owes a debt to Brittany Chiang's [v4](https://v4.brittanychiang.com/) — see
-[differentiation.md](https://github.com/guilyx/branding/blob/master/research/differentiation.md).
+## Where things live
 
-## Stack
+| You want to change...                         | Edit this                         |
+| :-------------------------------------------- | :-------------------------------- |
+| Any text, name, project, team member, link    | `src/data/site.ts`                |
+| Colors, fonts, sizes, spacing, animation speed | `src/styles/theme.css`            |
+| Layout of a page or component                 | `src/styles/global.css`           |
+| Images and videos                             | drop files in `public/media/`     |
+| The logo shape                                | `src/data/logo.ts`                |
+| Page structure (rarely needed)                | `src/pages/*.astro`, `src/components/*.astro` |
 
-- **[Astro 5](https://astro.build)** — static output, ships ~0 JS by default
-- **[Tailwind CSS 4](https://tailwindcss.com)** — design tokens in a single `@theme` block
-- **Vanilla TypeScript** — flocking sim, scroll reveals, and the trajectory timeline; no framework, no animation library
+Each page is one file in `src/pages/`: `index` (home), `services`, `portfolio`,
+`team`, `about`, `contact`, `404`.
 
-## Structure
+## Swapping placeholders for real media
+
+1. Put the file in `public/media/`, e.g. `public/media/team/jane.jpg`.
+2. In `src/data/site.ts`, replace the placeholder with the path *without*
+   `public`: `headshot: "/media/team/jane.jpg"`.
+
+Reels can be a video file in `public/media/` (MP4, H.264) or a YouTube/Vimeo
+link. Keep self-hosted videos small (under ~50 MB; GitHub rejects files over
+100 MB). YouTube or Vimeo is the better home for long reels.
+
+Image shapes the site crops to: team headshots 4:5 portrait, project covers
+16:9, service images 3:2, showreel poster 16:9. Around 2000 px on the long
+side is plenty.
+
+## Themes
+
+`src/styles/theme.css` has the default look (`:root`) and three alternates
+(`gallery`, `tide`, `brass`). Preview one on any page with `?theme=gallery`;
+add `?preview` to show a picker in the corner. `?theme=ink` goes back to
+default, `?preview=off` hides the picker. Both are remembered per browser.
+
+## Previewing on your own computer
+
+Needs [Node.js](https://nodejs.org) 20 or newer. In this folder:
 
 ```
-src/
-├── data/site.ts          ← ALL content lives here (bio, jobs, projects, socials)
-├── styles/global.css     ← design tokens + base styles
-├── layouts/Base.astro    ← shell: meta, nav, side rails, footer, reveal script
-├── components/           ← Hero (boids), About, Experience, Projects, Contact…
-├── content/
-│   ├── blog/             ← markdown posts
-│   └── photos/           ← photo entries (image + frontmatter markdown)
-└── pages/                ← /, /blog, /blog/[slug], /photos, /404, RSS
+npm install
+npm run dev
 ```
 
-## Commands
+Then open http://localhost:4321. The page reloads as you save files.
+`npm run build` makes the final site in `dist/` (a good check before pushing).
 
-| Command           | Action                                       |
-| :---------------- | :------------------------------------------- |
-| `npm install`     | Install dependencies                         |
-| `npm run dev`     | Dev server at `localhost:4321`               |
-| `npm run build`   | Production build to `./dist/`                |
-| `npm run preview` | Preview the build locally                    |
+## Fonts
 
-## Editing content
-
-Everything rendered on the homepage comes from **`src/data/site.ts`** — jobs,
-projects, technologies, socials, copy. No component edits needed.
-
-**Blog**: drop a markdown file in `src/content/blog/` with `title`,
-`description`, and `date` frontmatter.
-
-**Photos**: put an image plus a small `.md` file in `src/content/photos/`:
-
-```md
----
-title: "Dune lines"
-location: "Liwa, UAE"
-date: 2026-05-01
-cover: ./dune-lines.jpg
----
-```
-
-## Deploying
-
-Static output — anything works:
-
-- **Vercel** (zero config): import the repo, done. Every push deploys.
-- **GitHub Pages / Netlify / Cloudflare**: build command `npm run build`,
-  output directory `dist`.
-
-Update `site` in `astro.config.mjs` (and `src/data/site.ts` + `public/robots.txt`)
-if the domain changes.
+Self-hosted in `public/fonts/` (Quicksand, Cormorant Garamond, Jost), all
+under the SIL Open Font License (`public/fonts/LICENSE-OFL.txt`).

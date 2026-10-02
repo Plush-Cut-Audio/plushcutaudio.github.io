@@ -1,0 +1,32 @@
+---
+import Base from "@/layouts/Base.astro";
+import { services, servicesIntro } from "@/data/site";
+---
+
+<Base title="Services">
+  <div class="container">
+    <header class="page-intro">
+      <h1 class="page-title">Services</h1>
+      <p class="page-lede">{servicesIntro}</p>
+    </header>
+
+    <ul class="services">
+      {services.map((s) => (
+        <li class="service">
+          <div class="service__media frame frame--classic">
+            <img src={s.image} alt="" loading="lazy" />
+          </div>
+          <div class="service__body">
+            <h2 class="service__name">{s.name}</h2>
+            <p class="service__text">{s.text}</p>
+            <ul class="service__includes">
+              {s.includes.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

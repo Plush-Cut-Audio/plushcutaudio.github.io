@@ -1,0 +1,155 @@
+/* ===========================================================================
+   PLUSH CUT AUDIO · THEME
+   ---------------------------------------------------------------------------
+   This is the one file to edit when the visual direction changes.
+   Every color, font, size and timing on the site reads from these variables.
+
+   How it works
+   - The :root block is the DEFAULT look that every visitor sees.
+   - Each [data-theme="..."] block below is an ALTERNATE look. It only
+     overrides the values it lists; anything it leaves out falls back to
+     the default.
+   - To preview an alternate on the live site, add ?theme=<name> to any URL,
+     e.g.  plushcutaudio.com/?theme=gallery   (?theme=ink returns to default).
+     Add ?preview to show a small theme picker in the bottom-left corner.
+   - To add a new alternate: copy one of the blocks, give it a new name,
+     then add that name to the `themes` list in src/data/site.ts so it
+     shows up in the picker.
+   - To make an alternate the default: copy its values into :root.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Fonts (self-hosted in /public/fonts, so nothing loads from Google)
+   To try a new font: drop its .ttf/.woff2 into public/fonts, add an
+   @font-face block like these, then use its family name in --font-*.
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Quicksand";
+  src: url("/fonts/Quicksand.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond-Italic.ttf") format("truetype");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/Jost.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------------
+   DEFAULT THEME · "ink"
+   Black and bone from the deck, with Calder red held back for small moments.
+--------------------------------------------------------------------------- */
+:root {
+  /* Color ----------------------------------------------------------------- */
+  --color-bg: #111111;          /* page background */
+  --color-surface: #191919;     /* raised areas: image frames, menu, modal */
+  --color-text: #ecedeb;        /* headings and main text (matches the logo) */
+  --color-muted: #8e8e8a;       /* secondary text: captions, descriptions */
+  --color-faint: #3a3a38;       /* very quiet text and the large background mark */
+  --color-line: #262626;        /* thin borders */
+  --color-accent: #d3271d;      /* the one bright color. Use sparingly. */
+  --color-on-accent: #ffffff;   /* text sitting on top of the accent */
+  --color-logo: var(--color-text);
+
+  /* Type ------------------------------------------------------------------ */
+  --font-display: "Quicksand", ui-sans-serif, system-ui, sans-serif; /* page titles */
+  --font-body: "Quicksand", ui-sans-serif, system-ui, sans-serif;    /* everything else */
+  --font-wordmark: "Quicksand", ui-sans-serif, system-ui, sans-serif; /* PLUSH CUT AUDIO */
+
+  --weight-display: 300;        /* page titles. 300 = light, 400 = regular */
+  --weight-body: 400;
+  --weight-strong: 600;
+  --tracking-display: -0.02em;  /* letter spacing on big titles */
+  --tracking-wordmark: 0.42em;  /* the wide spacing in PLUSH CUT AUDIO */
+
+  /* Sizes scale smoothly between phone and desktop.
+     clamp(smallest, preferred, largest) */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  --text-2xl: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-hero: clamp(3.25rem, 1.5rem + 7vw, 8.5rem);
+
+  /* Space & layout -------------------------------------------------------- */
+  --page-width: 84rem;          /* widest the content gets */
+  --gutter: clamp(1.25rem, 4vw, 4rem); /* left/right page margin */
+  --space-section: clamp(6rem, 14vw, 13rem); /* air between major sections */
+  --space-block: clamp(3rem, 6vw, 5.5rem);   /* air between items in a section */
+  --radius-media: 2px;          /* corner rounding on images and video */
+  --radius-pill: 999px;         /* corner rounding on tags and buttons */
+
+  /* Motion ---------------------------------------------------------------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 450ms;            /* hovers, menus, filters */
+  --duration-signature: 2600ms; /* how long the logo takes to sign itself */
+  --media-dim: 0.92;            /* image brightness at rest (1 = untouched) */
+}
+
+/* ---------------------------------------------------------------------------
+   ALTERNATE · "gallery"
+   Light, museum-wall version with a classical serif for titles.
+--------------------------------------------------------------------------- */
+[data-theme="gallery"] {
+  --color-bg: #ededea;
+  --color-surface: #e1e1dd;
+  --color-text: #141414;
+  --color-muted: #66665f;
+  --color-faint: #c9c9c3;
+  --color-line: #d2d2cc;
+  --color-accent: #c4241b;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --weight-display: 400;
+  --tracking-display: -0.01em;
+  --media-dim: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   ALTERNATE · "tide"
+   Deep water blue-black, accent from the blue of the gown and the orca's sea.
+--------------------------------------------------------------------------- */
+[data-theme="tide"] {
+  --color-bg: #0b1016;
+  --color-surface: #121a23;
+  --color-text: #e6ebf0;
+  --color-muted: #8394a6;
+  --color-faint: #2a3644;
+  --color-line: #1e2935;
+  --color-accent: #6b9de0;
+  --color-on-accent: #0b1016;
+}
+
+/* ---------------------------------------------------------------------------
+   ALTERNATE · "brass"
+   Warm black with the brass of the Calder mobile, set in a sharper geometric.
+--------------------------------------------------------------------------- */
+[data-theme="brass"] {
+  --color-bg: #121110;
+  --color-surface: #1b1a17;
+  --color-text: #efe9de;
+  --color-muted: #9a9184;
+  --color-faint: #3b3833;
+  --color-line: #2a2824;
+  --color-accent: #c29d5c;
+  --color-on-accent: #121110;
+  --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --weight-display: 300;
+  --tracking-wordmark: 0.5em;
+}

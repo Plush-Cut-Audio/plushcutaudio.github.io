@@ -1,34 +1,19 @@
 ---
-import Icon from "@/components/Icon.astro";
+import Mark from "@/components/Mark.astro";
 import { site } from "@/data/site";
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="border-line mt-8 border-t py-10">
-  <div class="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
-    <div class="flex gap-5">
-      {
-        site.socials.map((s) => (
-          <a
-            href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={s.label}
-            class="text-muted hover:text-accent transition-colors"
-          >
-            <Icon name={s.icon} />
-          </a>
-        ))
-      }
-    </div>
-    <p class="font-mono text-faint text-center text-xs sm:text-right">
-      <a
-        href="https://github.com/guilyx/v4"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:text-accent transition-colors"
-      >
-        built by {site.name}
-      </a>
-    </p>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <Mark class="site-footer__mark" />
+    <ul class="site-footer__links">
+      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      {site.socials.map((s) => (
+        <li><a href={s.url} target="_blank" rel="noopener">{s.label}</a></li>
+      ))}
+    </ul>
+    <p>&copy; {year} {site.name}</p>
   </div>
 </footer>

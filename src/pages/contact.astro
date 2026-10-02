@@ -1,0 +1,22 @@
+---
+import Swash from "@/components/Swash.astro";
+import Base from "@/layouts/Base.astro";
+import { site, contact } from "@/data/site";
+---
+
+<Base title="Contact">
+  <section class="contact container">
+    <h1 class="page-title">{contact.heading}</h1>
+    <a class="contact__email swash-link" href={`mailto:${site.email}`}>
+      {site.email}
+      <Swash />
+    </a>
+    <p class="contact__note">{contact.note}</p>
+    <div class="contact__details">
+      <p>{site.location}</p>
+      {site.socials.map((s) => (
+        <a href={s.url} target="_blank" rel="noopener">{s.label}</a>
+      ))}
+    </div>
+  </section>
+</Base>

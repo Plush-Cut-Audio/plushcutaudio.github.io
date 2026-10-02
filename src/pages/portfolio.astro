@@ -1,0 +1,36 @@
+---
+import Base from "@/layouts/Base.astro";
+import WorkCard from "@/components/WorkCard.astro";
+import { studioWork, teamCredits } from "@/data/site";
+---
+
+<Base title="Portfolio">
+  <div class="container">
+    <header class="page-intro">
+      <h1 class="page-title">Portfolio</h1>
+    </header>
+
+    <section class="work-section" aria-labelledby="studio-work">
+      <div class="work-section__head">
+        <h2 class="section-title" id="studio-work">Studio work</h2>
+      </div>
+      <ul class="work-grid work-grid--feature">
+        {studioWork.map((p) => (
+          <WorkCard project={p} />
+        ))}
+      </ul>
+    </section>
+
+    <section class="work-section" aria-labelledby="team-credits">
+      <div class="work-section__head">
+        <h2 class="section-title" id="team-credits">Team credits</h2>
+        <p class="section-note">Games our people helped make before and alongside Plush Cut Audio.</p>
+      </div>
+      <ul class="work-grid work-grid--credits">
+        {teamCredits.map((p) => (
+          <WorkCard project={p} />
+        ))}
+      </ul>
+    </section>
+  </div>
+</Base>

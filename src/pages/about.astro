@@ -1,0 +1,20 @@
+---
+import Base from "@/layouts/Base.astro";
+import Mark from "@/components/Mark.astro";
+import { about } from "@/data/site";
+---
+
+<Base title="About">
+  <section class="vision container">
+    <Mark class="vision__mark" />
+    <h1 class="vision__statement">{about.vision}</h1>
+  </section>
+
+  <section class="container">
+    <div class="about-body">
+      {about.paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </section>
+</Base>

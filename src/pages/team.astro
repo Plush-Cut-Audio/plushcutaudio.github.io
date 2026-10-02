@@ -1,0 +1,40 @@
+---
+import Base from "@/layouts/Base.astro";
+import PlayIcon from "@/components/PlayIcon.astro";
+import { team, DISCIPLINES } from "@/data/site";
+---
+
+<Base title="Team">
+  <div class="container">
+    <header class="page-intro">
+      <h1 class="page-title">Team</h1>
+    </header>
+
+    <div class="filter" role="group" aria-label="Show team members by discipline">
+      <button type="button" data-filter="all" aria-pressed="true">Everyone</button>
+      {DISCIPLINES.map((d) => (
+        <button type="button" data-filter={d} aria-pressed="false">{d}</button>
+      ))}
+    </div>
+
+    <ul class="team-grid is-unfiltered" data-team-grid>
+      {team.map((m) => (
+        <li class="member" data-disciplines={m.disciplines.join("|")}>
+          <a class="member__reel" href={m.reel} data-reel-src={m.reel} data-reel-title={`${m.name}, reel`}>
+            <span class="frame frame--portrait">
+              <img src={m.headshot} alt={`Portrait of ${m.name}`} loading="lazy" />
+            </span>
+            <PlayIcon />
+            <span class="visually-hidden">Play {m.name}'s reel</span>
+          </a>
+          <h2 class="member__name">{m.name}</h2>
+          <ul class="tags" aria-label="Disciplines">
+            {m.disciplines.map((d) => (
+              <li class="tag">{d}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

@@ -1,0 +1,14 @@
+---
+/** Round play button. `label` is the visible text beside it (optional). */
+interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+
+<span class="play">
+  <span class="play__icon">
+    <svg viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0 10 6 0 12Z" fill="currentColor" /></svg>
+  </span>
+  {label && (<span>{label}</span>)}
+</span>

@@ -1,0 +1,38 @@
+---
+/**
+ * One project in the portfolio grid.
+ * With a reel it plays on click; with only a url it links out;
+ * with neither it is just an image and caption.
+ */
+import PlayIcon from "@/components/PlayIcon.astro";
+
+const { project: p } = Astro.props;
+const href = p.reel || p.url;
+const external = !p.reel && p.url;
+const detail = [p.studio, ...(p.disciplines || [])].join(", ");
+const members = (p.members || []).join(", ");
+---
+
+<li class="work-card">
+  <a
+    class="work-card__link"
+    href={href}
+    data-reel-src={p.reel}
+    data-reel-title={p.reel ? p.title : undefined}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener" : undefined}
+  >
+    <div class="work-card__media">
+      <span class="frame">
+        <img src={p.image} alt="" loading="lazy" />
+      </span>
+      {p.reel && (<PlayIcon />)}
+    </div>
+    <div class="work-card__meta">
+      <h3 class="work-card__title">{p.title}</h3>
+      <span class="work-card__year">{p.year}</span>
+    </div>
+    <p class="work-card__detail">{detail}</p>
+    {members && (<p class="work-card__members">With {members}</p>)}
+  </a>
+</li>

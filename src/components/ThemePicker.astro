@@ -1,0 +1,13 @@
+---
+/**
+ * Small theme switcher for comparing looks. Hidden unless the URL has been
+ * visited with ?preview at least once in this browser. ?preview=off hides it.
+ */
+import { themes } from "@/data/site";
+---
+
+<div class="theme-picker" role="group" aria-label="Preview theme">
+  {themes.map((t) => (
+    <button type="button" data-theme-choice={t.id} aria-pressed="false">{t.label}</button>
+  ))}
+</div>

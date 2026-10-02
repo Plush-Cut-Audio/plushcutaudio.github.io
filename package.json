@@ -1,9 +1,9 @@
 {
-  "name": "elejeune-v4",
+  "name": "plushcutaudio-site",
   "type": "module",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "v4 of Erwin Lejeune's portfolio — elejeune.me",
+  "description": "Plush Cut Audio website, plushcutaudio.com",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
