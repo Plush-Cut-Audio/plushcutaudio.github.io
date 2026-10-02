@@ -29,13 +29,13 @@ const LOREM =
 export const site = {
   name: "Plush Cut Audio",
   /** Shown under the logo on the home page. Keep it to a few words. */
-  descriptor: "Bespoke audio for games",
+  descriptor: "Exquisite sound for games",
   /** Used by search engines and link previews. */
   description:
     "Plush Cut Audio is a game audio studio. Music, sound design, dialogue and technical audio, made by hand.",
   url: "https://plushcutaudio.com",
-  email: "hello@plushcutaudio.com", // PLACEHOLDER
-  location: "Los Angeles, California", // PLACEHOLDER
+  email: "info@plushcutaudio.com", // PLACEHOLDER
+  location: "Remote", // PLACEHOLDER
   socials: [
     // PLACEHOLDERS. Delete any you don't use; add more in the same shape.
     { label: "LinkedIn", url: "https://www.linkedin.com/" },
@@ -168,6 +168,6 @@ export const about = {
    Contact page
 --------------------------------------------------------------------------- */
 export const contact = {
-  heading: "Tell us about your game.",
+  heading: "Let's make art.",
   note: LOREM_SHORT,
 };
