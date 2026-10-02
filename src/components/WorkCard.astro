@@ -1,6 +1,6 @@
 ---
 /**
- * One project in the portfolio grid.
+ * One project on the Projects page.
  * With a reel it plays on click; with only a url it links out;
  * with neither it is just an image and caption.
  */
@@ -23,7 +23,7 @@ const members = (p.members || []).join(", ");
     rel={external ? "noopener" : undefined}
   >
     <div class="work-card__media">
-      <span class="frame">
+      <span class="frame frame--landscape">
         <img src={p.image} alt="" loading="lazy" />
       </span>
       {p.reel && (<PlayIcon />)}

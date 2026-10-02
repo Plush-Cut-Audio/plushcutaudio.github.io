@@ -120,6 +120,7 @@ h3 {
   transform: none;
 }
 
+
 /* ---------------------------------------------------------------------------
    Shared building blocks
 --------------------------------------------------------------------------- */
@@ -130,39 +131,36 @@ h3 {
   padding-inline: var(--gutter);
 }
 
-/* Big page title + optional one-line introduction */
+/* Page name + optional one-line introduction, sitting just under the header */
 .page-intro {
-  padding-top: clamp(9rem, 20vw, 16rem);
-  padding-bottom: var(--space-block);
+  padding-top: clamp(6rem, 9vw, 8rem);
+  padding-bottom: clamp(1.75rem, 3vw, 2.75rem);
 }
 
 .page-title {
   font-family: var(--font-display);
   font-weight: var(--weight-display);
-  font-size: var(--text-hero);
+  font-size: var(--text-title);
   letter-spacing: var(--tracking-display);
-  line-height: 0.95;
+  line-height: 1;
 }
 
 .page-lede {
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  max-width: 34ch;
+  margin-top: 1rem;
+  max-width: 44ch;
   color: var(--color-muted);
-  font-size: var(--text-lg);
-  line-height: 1.5;
 }
 
 .section-title {
-  font-family: var(--font-display);
-  font-weight: var(--weight-display);
-  font-size: var(--text-2xl);
-  letter-spacing: var(--tracking-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-body);
 }
 
 .section-note {
-  margin-top: 1rem;
-  max-width: 40ch;
+  margin-top: 0.35rem;
+  max-width: 48ch;
   color: var(--color-muted);
+  font-size: var(--text-sm);
 }
 
 /* Image frame: holds any image at a fixed shape and crops to fit */
@@ -177,11 +175,8 @@ h3 {
 .frame--portrait {
   aspect-ratio: 4 / 5;
 }
-.frame--wide {
-  aspect-ratio: 21 / 9;
-}
-.frame--classic {
-  aspect-ratio: 3 / 2;
+.frame--landscape {
+  aspect-ratio: 16 / 10;
 }
 .frame img {
   width: 100%;
@@ -192,8 +187,13 @@ h3 {
     transform 1.2s var(--ease),
     filter var(--duration) var(--ease);
 }
+a:hover .frame img,
+a:focus-visible .frame img {
+  transform: scale(1.025);
+  filter: brightness(1);
+}
 
-/* Round play button that sits on top of images */
+/* Round play button */
 .play {
   display: inline-flex;
   align-items: center;
@@ -219,25 +219,45 @@ h3 {
   margin-left: 0.15rem;
 }
 a:hover .play__icon,
-a:focus-visible .play__icon {
+a:focus-visible .play__icon,
+button:hover .play__icon,
+button:focus-visible .play__icon {
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: var(--color-on-accent);
 }
-a:hover .frame img,
-a:focus-visible .frame img {
-  transform: scale(1.025);
-  filter: brightness(1);
+
+/* Main call-to-action button */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.5rem 2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-base);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.02em;
+  transition:
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
+}
+.button:hover,
+.button:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 /* Small rounded labels (team disciplines) */
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 .tag {
-  padding: 0.2rem 0.7rem 0.25rem;
+  padding: 0.15rem 0.65rem 0.2rem;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-pill);
   color: var(--color-muted);
@@ -254,10 +274,9 @@ a:focus-visible .frame img {
 .swash {
   position: absolute;
   left: -4%;
-  right: -4%;
-  bottom: -0.55em;
-  height: 0.45em;
+  bottom: -0.3em;
   width: 108%;
+  height: 0.3em;
   color: var(--color-accent);
   clip-path: inset(0 100% 0 0);
   transition: clip-path var(--duration) var(--ease);
@@ -285,24 +304,23 @@ a:focus-visible .frame img {
   stroke-dashoffset: 1;
   /* each piece of the pen path draws in turn; timings come from logo.ts */
   animation: sign calc(var(--duration-signature) * var(--for)) linear
-    calc(300ms + var(--duration-signature) * var(--at)) forwards;
+    calc(250ms + var(--duration-signature) * var(--at)) forwards;
+}
+@keyframes sign {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* A full copy of the mark fades in under the last stroke, so the finished
    logo is always exact even if the pen pieces miss a sliver */
 .mark-settle {
   opacity: 0;
-  animation: settle 500ms ease-out calc(var(--duration-signature) + 200ms) forwards;
+  animation: settle 400ms ease-out calc(var(--duration-signature) + 150ms) forwards;
 }
 @keyframes settle {
   to {
     opacity: 1;
-  }
-}
-
-@keyframes sign {
-  to {
-    stroke-dashoffset: 0;
   }
 }
 
@@ -340,17 +358,28 @@ a:focus-visible .frame img {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  height: clamp(4.5rem, 8vw, 6rem);
+  height: clamp(4rem, 5.5vw, 4.75rem);
 }
 
+/* Home link: mark + name. Turns the accent color on hover. */
 .site-header__home {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.9rem;
+  transition:
+    opacity var(--duration) var(--ease),
+    color var(--duration) var(--ease);
+}
+.site-header__home .mark {
+  color: inherit;
+}
+.site-header__home:hover,
+.site-header__home:focus-visible {
+  color: var(--color-accent);
 }
 .site-header__mark {
   width: auto;
-  height: 2.6rem;
+  height: 2.2rem;
 }
 .site-header__name {
   font-size: var(--text-xs);
@@ -360,13 +389,10 @@ a:focus-visible .frame img {
   opacity: 0;
   pointer-events: none;
 }
-.site-header__home {
-  transition: opacity var(--duration) var(--ease);
-}
 
 .nav-list {
   display: flex;
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
   font-size: var(--text-sm);
   letter-spacing: 0.02em;
 }
@@ -378,6 +404,10 @@ a:focus-visible .frame img {
 .nav-list a:focus-visible,
 .nav-list a[aria-current="page"] {
   color: var(--color-text);
+}
+/* In the menu bar only the current page gets the swash, never on hover */
+.nav-list .swash-link:not([aria-current="page"]) .swash {
+  clip-path: inset(0 100% 0 0);
 }
 
 .menu-toggle {
@@ -439,26 +469,29 @@ a:focus-visible .frame img {
 --------------------------------------------------------------------------- */
 .site-footer {
   margin-top: var(--space-section);
-  padding-block: 3rem 2.5rem;
+  padding-block: 2rem;
   font-size: var(--text-sm);
   color: var(--color-muted);
+}
+.is-home .site-footer {
+  margin-top: 0;
 }
 .site-footer__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1.5rem 2rem;
 }
 .site-footer__mark {
   width: auto;
-  height: 3.5rem;
+  height: 2.75rem;
   color: var(--color-faint);
 }
 .site-footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 2rem;
+  gap: 0.5rem 1.75rem;
 }
 .site-footer__links a {
   transition: color var(--duration) var(--ease);
@@ -472,38 +505,49 @@ a:focus-visible .frame img {
    Home
 --------------------------------------------------------------------------- */
 .hero {
-  min-height: 92svh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 5rem;
-  padding-bottom: 3rem;
+  padding-block: 5rem 2rem;
   text-align: center;
 }
 .hero__mark {
   width: auto;
-  height: clamp(15rem, 46svh, 30rem);
+  height: clamp(13rem, 42svh, 24rem);
 }
 .hero__wordmark {
-  margin-top: clamp(2rem, 5svh, 3.5rem);
-  font-size: clamp(0.85rem, 0.7rem + 0.6vw, 1.15rem);
+  margin-top: clamp(1.75rem, 4svh, 2.75rem);
+  font-size: clamp(0.85rem, 0.7rem + 0.5vw, 1.1rem);
 }
 .hero__descriptor {
-  margin-top: 1.1rem;
+  margin-top: 0.9rem;
   color: var(--color-muted);
   font-size: var(--text-sm);
   letter-spacing: 0.02em;
 }
-/* Wordmark and descriptor arrive as the signature finishes */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem 2.25rem;
+  margin-top: clamp(2rem, 5svh, 3.25rem);
+}
+/* Wordmark, descriptor and buttons arrive as the signature finishes */
 .hero__wordmark,
-.hero__descriptor {
+.hero__descriptor,
+.hero__actions {
   opacity: 0;
-  animation: arrive 1400ms var(--ease) forwards;
-  animation-delay: calc(var(--duration-signature) * 0.85);
+  animation: arrive 1100ms var(--ease) forwards;
+  animation-delay: calc(var(--duration-signature) * 0.9);
 }
 .hero__descriptor {
-  animation-delay: calc(var(--duration-signature) * 0.85 + 250ms);
+  animation-delay: calc(var(--duration-signature) * 0.9 + 150ms);
+}
+.hero__actions {
+  animation-delay: calc(var(--duration-signature) * 0.9 + 300ms);
 }
 @keyframes arrive {
   from {
@@ -516,141 +560,64 @@ a:focus-visible .frame img {
   }
 }
 
-.showreel {
-  padding-top: clamp(2rem, 6vw, 5rem);
-}
-.showreel__link {
-  position: relative;
-  display: block;
-}
-.showreel__link .play {
-  position: absolute;
-  left: clamp(1.25rem, 3vw, 2.5rem);
-  bottom: clamp(1.25rem, 3vw, 2.5rem);
-  color: #fff;
-}
-.showreel__player {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: #000;
-}
-
-.home-close {
-  padding-top: var(--space-section);
-  text-align: center;
-}
-.home-close__list {
-  display: grid;
-  gap: 0.1em;
-  font-family: var(--font-display);
-  font-weight: var(--weight-display);
-  font-size: var(--text-2xl);
-  letter-spacing: var(--tracking-display);
-  line-height: 1.2;
-}
-.home-close__list a {
-  color: var(--color-muted);
-  transition: color var(--duration) var(--ease);
-}
-.home-close__list a:hover,
-.home-close__list a:focus-visible {
-  color: var(--color-text);
-}
-.home-close__cta {
-  display: inline-block;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  font-size: var(--text-base);
-  letter-spacing: 0.02em;
-}
-
 /* ---------------------------------------------------------------------------
-   Services
+   Services: four across on wide screens
 --------------------------------------------------------------------------- */
 .services {
   display: grid;
-  gap: var(--space-section);
-}
-.service {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  align-items: end;
-  gap: var(--space-block) var(--gutter);
-}
-.service__media {
-  grid-column: 1 / span 7;
-}
-.service__body {
-  grid-column: 9 / -1;
-}
-.service:nth-child(even) .service__media {
-  grid-column: 6 / -1;
-  grid-row: 1;
-}
-.service:nth-child(even) .service__body {
-  grid-column: 1 / span 4;
-  grid-row: 1;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-block) var(--grid-gap);
 }
 .service__name {
-  font-family: var(--font-display);
-  font-weight: var(--weight-display);
-  font-size: var(--text-2xl);
-  letter-spacing: var(--tracking-display);
+  margin-top: 1.1rem;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-body);
 }
 .service__text {
-  margin-top: 1.5rem;
+  margin-top: 0.6rem;
   color: var(--color-muted);
-  max-width: 38ch;
+  font-size: var(--text-sm);
+  max-width: 40ch;
 }
 .service__includes {
-  margin-top: 1.75rem;
+  margin-top: 1rem;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.2rem;
   font-size: var(--text-sm);
 }
 
-@media (max-width: 860px) {
-  .service,
-  .service:nth-child(even) {
-    grid-template-columns: 1fr;
+@media (max-width: 1100px) {
+  .services {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .service .service__media,
-  .service .service__body,
-  .service:nth-child(even) .service__media,
-  .service:nth-child(even) .service__body {
-    grid-column: 1;
-    grid-row: auto;
+}
+@media (max-width: 600px) {
+  .services {
+    grid-template-columns: 1fr;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Portfolio
+   Projects
 --------------------------------------------------------------------------- */
-.work-section {
-  margin-top: var(--space-block);
-}
 .work-section + .work-section {
   margin-top: var(--space-section);
 }
 .work-section__head {
-  margin-bottom: var(--space-block);
+  margin-bottom: 1.25rem;
 }
 
 .work-grid {
   display: grid;
-  gap: var(--space-block) var(--gutter);
+  gap: var(--space-block) var(--grid-gap);
 }
-/* Studio work: first project full width, the rest in pairs */
+/* Studio work: three across */
 .work-grid--feature {
-  grid-template-columns: repeat(2, 1fr);
-}
-.work-grid--feature > :first-child {
-  grid-column: 1 / -1;
-}
-/* Team credits: three across */
-.work-grid--credits {
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1rem, 2vw, 1.75rem);
+}
+/* Team credits: four across, smaller */
+.work-grid--credits {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .work-card__link {
@@ -661,22 +628,22 @@ a:focus-visible .frame img {
 }
 .work-card__media .play {
   position: absolute;
-  left: 1.25rem;
-  bottom: 1.25rem;
+  left: 1rem;
+  bottom: 1rem;
   color: #fff;
+}
+.work-card__media .play__icon {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .work-card__meta {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
-  margin-top: 1.1rem;
+  margin-top: 0.8rem;
 }
 .work-card__title {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-body);
-}
-.work-grid--credits .work-card__title {
   font-size: var(--text-base);
   font-weight: var(--weight-strong);
 }
@@ -687,17 +654,25 @@ a:focus-visible .frame img {
 }
 .work-card__detail,
 .work-card__members {
-  margin-top: 0.3rem;
+  margin-top: 0.15rem;
   color: var(--color-muted);
   font-size: var(--text-sm);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+  .work-grid--feature {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .work-grid--credits {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 700px) {
   .work-grid--credits {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 520px) {
   .work-grid--feature,
   .work-grid--credits {
     grid-template-columns: 1fr;
@@ -705,16 +680,16 @@ a:focus-visible .frame img {
 }
 
 /* ---------------------------------------------------------------------------
-   Team
+   Team: five across (two rows of five), two across on phones
 --------------------------------------------------------------------------- */
 .filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: var(--space-block);
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
 }
 .filter button {
-  padding: 0.45rem 1.1rem 0.5rem;
+  padding: 0.35rem 1rem 0.4rem;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-pill);
   color: var(--color-muted);
@@ -737,21 +712,7 @@ a:focus-visible .frame img {
 .team-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: clamp(2.5rem, 5vw, 4.5rem) clamp(1rem, 2vw, 1.75rem);
-}
-/* Staggered columns: every second column sits lower, like a contact sheet
-   that was laid down by hand */
-@media (min-width: 901px) {
-  .team-grid.is-unfiltered .member:nth-child(5n + 2),
-  .team-grid.is-unfiltered .member:nth-child(5n + 4) {
-    transform: translateY(var(--space-block));
-  }
-  .team-grid.is-unfiltered {
-    padding-bottom: var(--space-block);
-  }
-}
-.member {
-  transition: opacity var(--duration) var(--ease);
+  gap: var(--space-block) var(--grid-gap);
 }
 .member[hidden] {
   display: none;
@@ -760,32 +721,53 @@ a:focus-visible .frame img {
   position: relative;
   display: block;
 }
-.member__reel .play {
+/* "Watch reel" hint appears over the headshot on hover */
+.member__hint {
   position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+  left: 0.9rem;
+  bottom: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   color: #fff;
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(0.3rem);
+  transition:
+    opacity var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
 }
-.member__reel .play__icon {
-  width: 2.5rem;
-  height: 2.5rem;
+.member__hint svg {
+  width: 0.55rem;
+  height: 0.55rem;
+  color: var(--color-accent);
+}
+.member__reel:hover .member__hint,
+.member__reel:focus-visible .member__hint {
+  opacity: 1;
+  transform: none;
+}
+/* Phones and tablets have no hover: show the hint all the time */
+@media (hover: none) {
+  .member__hint {
+    opacity: 1;
+    transform: none;
+  }
 }
 .member__name {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   font-size: var(--text-base);
   font-weight: var(--weight-strong);
   line-height: 1.3;
 }
 .member .tags {
-  margin-top: 0.6rem;
+  margin-top: 0.45rem;
 }
 
 @media (max-width: 900px) {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .team-grid.is-unfiltered .member {
-    transform: none !important;
   }
 }
 
@@ -794,7 +776,7 @@ a:focus-visible .frame img {
 --------------------------------------------------------------------------- */
 .vision {
   position: relative;
-  min-height: 100svh;
+  min-height: 92svh;
   display: grid;
   place-items: center;
   text-align: center;
@@ -804,7 +786,7 @@ a:focus-visible .frame img {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 78svh;
+  height: 74svh;
   width: auto;
   transform: translate(-50%, -50%);
   color: var(--color-faint);
@@ -821,42 +803,48 @@ a:focus-visible .frame img {
 }
 .about-body {
   display: grid;
-  gap: 1.5rem;
-  max-width: 38rem;
+  gap: 1.25rem;
+  max-width: 36rem;
   margin-inline: auto;
   color: var(--color-muted);
   font-size: var(--text-lg);
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 /* ---------------------------------------------------------------------------
-   Contact
+   Contact (also used by the 404 page)
 --------------------------------------------------------------------------- */
 .contact {
-  min-height: 78svh;
+  min-height: 70svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: clamp(8rem, 16vw, 12rem);
+  padding-top: clamp(6rem, 9vw, 8rem);
 }
 .contact .page-title {
-  max-width: 12ch;
+  font-size: var(--text-2xl);
+  max-width: 14ch;
 }
 .contact__email {
   align-self: flex-start;
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
   font-size: var(--text-xl);
   letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.contact__email .swash {
+  bottom: -0.2em;
+  height: 0.22em;
 }
 .contact__note {
-  margin-top: 2rem;
-  max-width: 36ch;
+  margin-top: 1.5rem;
+  max-width: 40ch;
   color: var(--color-muted);
 }
 .contact__details {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 3rem;
+  gap: 0.75rem 2.5rem;
   margin-top: var(--space-block);
   font-size: var(--text-sm);
   color: var(--color-muted);
@@ -957,7 +945,8 @@ a:focus-visible .frame img {
     opacity: 1;
   }
   .hero__wordmark,
-  .hero__descriptor {
+  .hero__descriptor,
+  .hero__actions {
     animation: none;
     opacity: 1;
   }

@@ -141,7 +141,6 @@ if (filterButtons.length && teamGrid) {
     button.addEventListener("click", () => {
       const choice = button.dataset.filter;
       filterButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-      teamGrid.classList.toggle("is-unfiltered", choice === "all");
       members.forEach((m) => {
         const list = m.dataset.disciplines.split("|");
         m.hidden = choice !== "all" && !list.includes(choice);

@@ -42,8 +42,9 @@ export const site = {
     { label: "Instagram", url: "https://www.instagram.com/" },
     { label: "YouTube", url: "https://www.youtube.com/" },
   ],
-  /** The studio showreel on the home page. Set poster to the still shown before play. */
-  showreel: { src: REEL, poster: IMG },
+  /** The studio showreel, opened by "Play showreel" on the home page.
+   *  A video file in /public/media or a YouTube/Vimeo link. */
+  showreel: { src: REEL },
 };
 
 /**
@@ -58,7 +59,7 @@ export const reelMode = "modal";
 --------------------------------------------------------------------------- */
 export const nav = [
   { label: "Services", href: "/services/" },
-  { label: "Portfolio", href: "/portfolio/" },
+  { label: "Projects", href: "/projects/" },
   { label: "Team", href: "/team/" },
   { label: "About", href: "/about/" },
   { label: "Contact", href: "/contact/" },
@@ -113,7 +114,7 @@ export const services = [
 ];
 
 /* ---------------------------------------------------------------------------
-   Portfolio page
+   Projects page
    - studioWork:   projects Plush Cut Audio delivered as a studio.
    - teamCredits:  projects individual members worked on elsewhere.
    Fields:

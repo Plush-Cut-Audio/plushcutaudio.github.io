@@ -8,4 +8,8 @@ export default defineConfig({
   site: "https://plushcutaudio.com",
   output: "static",
   integrations: [sitemap()],
+  // Old addresses that should forward to new ones
+  redirects: {
+    "/portfolio": "/projects",
+  },
 });

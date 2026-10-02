@@ -83,21 +83,22 @@
   --text-base: 1.0625rem;
   --text-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
   --text-xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
-  --text-2xl: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
-  --text-hero: clamp(3.25rem, 1.5rem + 7vw, 8.5rem);
+  --text-2xl: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-title: clamp(2.25rem, 1.5rem + 3vw, 4rem); /* page names: Services, Team... */
 
   /* Space & layout -------------------------------------------------------- */
-  --page-width: 84rem;          /* widest the content gets */
-  --gutter: clamp(1.25rem, 4vw, 4rem); /* left/right page margin */
-  --space-section: clamp(6rem, 14vw, 13rem); /* air between major sections */
-  --space-block: clamp(3rem, 6vw, 5.5rem);   /* air between items in a section */
+  --page-width: 100rem;         /* widest the content gets */
+  --gutter: clamp(1rem, 2.5vw, 2.5rem);      /* left/right page margin */
+  --grid-gap: clamp(0.75rem, 1.2vw, 1.25rem); /* space between images in a grid */
+  --space-section: clamp(4rem, 8vw, 7rem);   /* air between major sections */
+  --space-block: clamp(1.75rem, 3vw, 2.75rem); /* air between items in a section */
   --radius-media: 2px;          /* corner rounding on images and video */
   --radius-pill: 999px;         /* corner rounding on tags and buttons */
 
   /* Motion ---------------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 450ms;            /* hovers, menus, filters */
-  --duration-signature: 2600ms; /* how long the logo takes to sign itself */
+  --duration-signature: 1300ms; /* how long the logo takes to sign itself */
   --media-dim: 0.92;            /* image brightness at rest (1 = untouched) */
 }
 

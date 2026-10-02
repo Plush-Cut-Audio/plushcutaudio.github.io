@@ -1,6 +1,5 @@
 ---
 import Base from "@/layouts/Base.astro";
-import PlayIcon from "@/components/PlayIcon.astro";
 import { team, DISCIPLINES } from "@/data/site";
 ---
 
@@ -17,15 +16,19 @@ import { team, DISCIPLINES } from "@/data/site";
       ))}
     </div>
 
-    <ul class="team-grid is-unfiltered" data-team-grid>
+    <ul class="team-grid" data-team-grid>
       {team.map((m) => (
         <li class="member" data-disciplines={m.disciplines.join("|")}>
           <a class="member__reel" href={m.reel} data-reel-src={m.reel} data-reel-title={`${m.name}, reel`}>
             <span class="frame frame--portrait">
               <img src={m.headshot} alt={`Portrait of ${m.name}`} loading="lazy" />
             </span>
-            <PlayIcon />
-            <span class="visually-hidden">Play {m.name}'s reel</span>
+            {m.reel && (
+              <span class="member__hint">
+                <svg viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0 10 6 0 12Z" fill="currentColor" /></svg>
+                Watch reel
+              </span>
+            )}
           </a>
           <h2 class="member__name">{m.name}</h2>
           <ul class="tags" aria-label="Disciplines">

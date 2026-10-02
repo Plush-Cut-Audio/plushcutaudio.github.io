@@ -1,9 +1,8 @@
 ---
-import Swash from "@/components/Swash.astro";
 import Base from "@/layouts/Base.astro";
 import Mark from "@/components/Mark.astro";
 import PlayIcon from "@/components/PlayIcon.astro";
-import { site, services } from "@/data/site";
+import { site } from "@/data/site";
 ---
 
 <Base home>
@@ -12,32 +11,13 @@ import { site, services } from "@/data/site";
     <Mark animate class="hero__mark" />
     <p class="wordmark hero__wordmark" aria-hidden="true">{site.name}</p>
     <p class="hero__descriptor">{site.descriptor}</p>
-  </section>
 
-  <section class="showreel container" aria-label="Showreel">
-    <a
-      class="showreel__link"
-      href={site.showreel.src}
-      data-reel-src={site.showreel.src}
-      data-reel-title="Plush Cut Audio showreel"
-      data-reel-inline
-    >
-      <span class="frame">
-        <img src={site.showreel.poster} alt="" />
-      </span>
-      <PlayIcon label="Play showreel" />
-    </a>
-  </section>
-
-  <section class="home-close container" aria-label="What we do">
-    <ul class="home-close__list">
-      {services.map((s) => (
-        <li><a href="/services/">{s.name}</a></li>
-      ))}
-    </ul>
-    <a class="home-close__cta swash-link" href="/contact/">
-      Connect
-      <Swash />
-    </a>
+    <div class="hero__actions">
+      <!-- Plays the showreel in the pop-up player. Video: site.showreel in site.ts -->
+      <a href={site.showreel.src} data-reel-src={site.showreel.src} data-reel-title="Plush Cut Audio showreel">
+        <PlayIcon label="Play showreel" />
+      </a>
+      <a class="button" href="/contact/">Connect</a>
+    </div>
   </section>
 </Base>
