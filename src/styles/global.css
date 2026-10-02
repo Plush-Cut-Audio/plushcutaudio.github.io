@@ -138,6 +138,7 @@ h3 {
 }
 
 .page-title {
+  text-wrap: balance; /* avoids a lone word on the last line */
   font-family: var(--font-display);
   font-weight: var(--weight-display);
   font-size: var(--text-title);
@@ -224,29 +225,6 @@ button:hover .play__icon,
 button:focus-visible .play__icon {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-on-accent);
-}
-
-/* Main call-to-action button */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.5rem 2rem 0.6rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-text);
-  color: var(--color-bg);
-  font-size: var(--text-base);
-  font-weight: var(--weight-strong);
-  letter-spacing: 0.02em;
-  transition:
-    background-color var(--duration) var(--ease),
-    color var(--duration) var(--ease);
-}
-.button:hover,
-.button:focus-visible {
-  background: var(--color-accent);
   color: var(--color-on-accent);
 }
 
@@ -405,8 +383,9 @@ button:focus-visible .play__icon {
 .nav-list a[aria-current="page"] {
   color: var(--color-text);
 }
-/* In the menu bar only the current page gets the swash, never on hover */
-.nav-list .swash-link:not([aria-current="page"]) .swash {
+/* In the menu bar the swash appears on hover. The current page is marked
+   by brighter text only, so there is never more than one swash at a time. */
+.nav-list .swash-link[aria-current="page"] .swash {
   clip-path: inset(0 100% 0 0);
 }
 
@@ -535,6 +514,24 @@ button:focus-visible .play__icon {
   gap: 1.25rem 2.25rem;
   margin-top: clamp(2rem, 5svh, 3.25rem);
 }
+/* "Connect": larger text with the swash permanently signed under it */
+.hero__connect {
+  position: relative;
+  display: inline-block;
+  font-size: var(--text-lg);
+  letter-spacing: 0.01em;
+  transition: color var(--duration) var(--ease);
+}
+.hero__connect .swash {
+  clip-path: none;
+  bottom: -0.35em;
+  height: 0.35em;
+}
+.hero__connect:hover,
+.hero__connect:focus-visible {
+  color: var(--color-accent);
+}
+
 /* Wordmark, descriptor and buttons arrive as the signature finishes */
 .hero__wordmark,
 .hero__descriptor,
@@ -794,7 +791,8 @@ button:focus-visible .play__icon {
   z-index: -1;
 }
 .vision__statement {
-  max-width: 16ch;
+  max-width: 25ch; /* widen or narrow to change where the line breaks */
+  text-wrap: balance;
   font-family: var(--font-display);
   font-weight: var(--weight-display);
   font-size: var(--text-2xl);
@@ -821,9 +819,10 @@ button:focus-visible .play__icon {
   justify-content: center;
   padding-top: clamp(6rem, 9vw, 8rem);
 }
+/* The contact heading is the one title allowed to be larger than the rest */
 .contact .page-title {
-  font-size: var(--text-2xl);
-  max-width: 14ch;
+  font-size: clamp(2.75rem, 1.5rem + 4.6vw, 5.75rem);
+  max-width: 20ch;
 }
 .contact__email {
   align-self: flex-start;
@@ -852,6 +851,26 @@ button:focus-visible .play__icon {
 .contact__details a:hover,
 .contact__details a:focus-visible {
   color: var(--color-text);
+}
+
+/* ---------------------------------------------------------------------------
+   404 (page not found)
+--------------------------------------------------------------------------- */
+.notfound {
+  min-height: 70svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-top: clamp(6rem, 9vw, 8rem);
+}
+.notfound p {
+  color: var(--color-muted);
+}
+.notfound a {
+  margin-top: 1rem;
+  font-size: var(--text-base);
 }
 
 /* ---------------------------------------------------------------------------

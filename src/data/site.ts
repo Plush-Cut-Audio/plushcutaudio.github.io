@@ -161,7 +161,7 @@ export const team = [
    About page
 --------------------------------------------------------------------------- */
 export const about = {
-  vision: "Escape the clutter of the world through sound.",
+  vision: "escape the clutter of the world through sound",
   paragraphs: [LOREM, LOREM],
 };
 
@@ -169,6 +169,6 @@ export const about = {
    Contact page
 --------------------------------------------------------------------------- */
 export const contact = {
-  heading: "Bring your game to life",
+  heading: "bring your game to life",
   note: LOREM_SHORT,
 };

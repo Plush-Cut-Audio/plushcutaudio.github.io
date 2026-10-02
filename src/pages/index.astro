@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import Swash from "@/components/Swash.astro";
 import Mark from "@/components/Mark.astro";
 import PlayIcon from "@/components/PlayIcon.astro";
 import { site } from "@/data/site";
@@ -17,7 +18,11 @@ import { site } from "@/data/site";
       <a href={site.showreel.src} data-reel-src={site.showreel.src} data-reel-title="Plush Cut Audio showreel">
         <PlayIcon label="Listen" />
       </a>
-      <a class="button" href="/contact/">Connect</a>
+      <!-- Main call to action. The swash under it is always drawn. -->
+      <a class="hero__connect" href="/contact/">
+        Connect
+        <Swash />
+      </a>
     </div>
   </section>
 </Base>
