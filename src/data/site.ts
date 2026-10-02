@@ -29,12 +29,12 @@ const LOREM =
 export const site = {
   name: "Plush Cut Audio",
   /** Shown under the logo on the home page. Keep it to a few words. */
-  descriptor: "Exquisite sound for games",
+  descriptor: "Exquisite Sound for Interactive Media",
   /** Used by search engines and link previews. */
   description:
     "Plush Cut Audio is a game audio studio. Music, sound design, dialogue and technical audio, made by hand.",
   url: "https://plushcutaudio.com",
-  email: "info@plushcutaudio.com", // PLACEHOLDER
+  email: "info@plushcutaudio.com", 
   location: "Remote", // PLACEHOLDER
   socials: [
     // PLACEHOLDERS. Delete any you don't use; add more in the same shape.
@@ -161,7 +161,7 @@ export const team = [
    About page
 --------------------------------------------------------------------------- */
 export const about = {
-  vision: "To escape the clutter of the world through sound.",
+  vision: "Escape the clutter of the world through sound.",
   paragraphs: [LOREM, LOREM],
 };
 
@@ -169,6 +169,6 @@ export const about = {
    Contact page
 --------------------------------------------------------------------------- */
 export const contact = {
-  heading: "Let's make art.",
+  heading: "Bring your game to life",
   note: LOREM_SHORT,
 };

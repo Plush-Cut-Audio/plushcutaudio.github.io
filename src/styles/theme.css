@@ -66,8 +66,8 @@
   --color-logo: var(--color-text);
 
   /* Type ------------------------------------------------------------------ */
-  --font-display: "Quicksand", ui-sans-serif, system-ui, sans-serif; /* page titles */
-  --font-body: "Quicksand", ui-sans-serif, system-ui, sans-serif;    /* everything else */
+  --font-display: "Jost", ui-sans-serif, system-ui, sans-serif; /* page titles */
+  --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;    /* everything else */
   --font-wordmark: "Quicksand", ui-sans-serif, system-ui, sans-serif; /* PLUSH CUT AUDIO */
 
   --weight-display: 300;        /* page titles. 300 = light, 400 = regular */
