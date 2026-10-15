@@ -227,6 +227,16 @@ button:focus-visible .play__icon {
   border-color: var(--color-accent);
   color: var(--color-on-accent);
 }
+/* The label beside the button turns accent in step with it */
+.play__label {
+  transition: color var(--duration) var(--ease);
+}
+a:hover .play__label,
+a:focus-visible .play__label,
+button:hover .play__label,
+button:focus-visible .play__label {
+  color: var(--color-accent);
+}
 
 /* Small rounded labels (team disciplines) */
 .tags {
@@ -514,16 +524,13 @@ button:focus-visible .play__icon {
   gap: 1.25rem 2.25rem;
   margin-top: clamp(2rem, 5svh, 3.25rem);
 }
-/* "Connect": larger text with the swash permanently signed under it */
+/* "Connect": larger text; the swash signs in on hover and wipes back out after */
 .hero__connect {
-  position: relative;
-  display: inline-block;
   font-size: var(--text-lg);
   letter-spacing: 0.01em;
   transition: color var(--duration) var(--ease);
 }
 .hero__connect .swash {
-  clip-path: none;
   bottom: -0.35em;
   height: 0.35em;
 }
