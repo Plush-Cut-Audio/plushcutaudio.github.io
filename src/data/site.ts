@@ -32,7 +32,7 @@ export const site = {
   descriptor: "Exquisite Sound for Interactive Media",
   /** Used by search engines and link previews. */
   description:
-    "Plush Cut Audio is a game audio studio. Music, sound design, dialogue and technical audio, made by hand.",
+    "Artful audio for interactive media. Music, sound design, dialogue and implementation, carefully crafted by hand.",
   url: "https://plushcutaudio.com",
   email: "info@plushcutaudio.com", 
   location: "Remote", // PLACEHOLDER
@@ -176,7 +176,7 @@ export const team = [
   },
   {
     name: "Will Heilbraun",
-    disciplines: ["Music", "Sound Design"],
+    disciplines: ["Music", "Sound Design", "Technical"],
     headshot: "/media/headshots/will.jpg",
     reel: "https://youtu.be/LYjAvDZUDyk?si=gJRQVEgApZ8hO7bX",
     bio: "Will Heilbraun is an audio engineer, sound designer, and musician. Will works with a variety of artistic mediums, including classical and modern music, game scoring and development, and film. \n\nWith Will's early interest in all things involving audio, he quickly took on a variety of roles in his local community. He became a trusted figure in the community, bringing his sonic identity and knowledge to support rising artists and fellow audio professionals. \n\nAfter graduating from Indiana University's Jacobs School of Music, Will has a B.S. in Audio Engineering and Sound Production. Soon after graduating, Will moved to Los Angeles and began work as a dialogue recording engineer at One Line Studios as well as a Monitor engineer at Hollywood scoring. In addition, Will freelances and works on multiple game projects and clients. \n\nAudio has been a motivating focal point through all aspects of Will's life. Will strives for excellence on every project, with an experienced background and commitment to deliver professional audio results with great efficiency.",
@@ -206,7 +206,7 @@ export const team = [
     website: "https://www.linkedin.com/in/kiaraquelin/",
   },
   {
-    name: "Antonio Medellin Fajardo",
+    name: "Antonio Medellín Fajardo",
     disciplines: ["Music"],
     headshot: "/media/headshots/antonio.jpg",
     reel: "https://play.reelcrafter.com/qO_ljEU0SGmeNf0wFAOCCQ",
@@ -236,7 +236,7 @@ export const team = [
 --------------------------------------------------------------------------- */
 export const about = {
   vision: "escape the clutter of the world through sound",
-  paragraphs: [LOREM, LOREM],
+  paragraphs: "Plush Cut Audio represents the next generation of bespoke sound. Founded by Ariel Sol in 2026, the collective formed from a group of Game Audio Network Guild awardees and Game Audio Diversity Alliance scholars on a mission to collaborate. From music to programming, artistry is our center."
 };
 
 /* ---------------------------------------------------------------------------
@@ -244,5 +244,5 @@ export const about = {
 --------------------------------------------------------------------------- */
 export const contact = {
   heading: "bring your game to life",
-  note: LOREM_SHORT,
+  note: "Contact us to collaborate. Plush Cut Audio is a remote team with physical hubs in Los Angeles and New York.",
 };

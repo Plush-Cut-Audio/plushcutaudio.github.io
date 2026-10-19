@@ -48,6 +48,13 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/Jost-Italic.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* ---------------------------------------------------------------------------
    DEFAULT THEME · "ink"

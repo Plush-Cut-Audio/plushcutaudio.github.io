@@ -1,18 +1,22 @@
 ---
 import Base from "@/layouts/Base.astro";
-import Mark from "@/components/Mark.astro";
 import { about } from "@/data/site";
+
+// Either a list of paragraphs or one text with blank lines ("\n\n") between them
+const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs : about.paragraphs.split(/\n\s*\n/))
+  .map((p) => p.trim())
+  .filter(Boolean);
 ---
 
 <Base title="About">
   <section class="vision container">
-    <Mark class="vision__mark" />
+    <span class="vision__mark" aria-hidden="true"></span>
     <h1 class="vision__statement">{about.vision}</h1>
   </section>
 
   <section class="container">
     <div class="about-body">
-      {about.paragraphs.map((p) => (
+      {paragraphs.map((p) => (
         <p>{p}</p>
       ))}
     </div>

@@ -883,14 +883,19 @@ button:focus-visible .play__label {
   text-align: center;
   isolation: isolate;
 }
+/* The hand-painted mark (public/media/logo-brush.png) used as a stencil,
+   so it takes the theme's --color-faint while keeping the brush texture */
 .vision__mark {
   position: absolute;
   top: 50%;
   left: 50%;
   height: 74svh;
-  width: auto;
+  max-width: 92vw;
+  aspect-ratio: 580 / 906;
   transform: translate(-50%, -50%);
-  color: var(--color-faint);
+  background-color: var(--color-faint);
+  -webkit-mask: url("/media/logo-brush.png") center / contain no-repeat;
+  mask: url("/media/logo-brush.png") center / contain no-repeat;
   opacity: 0.55;
   z-index: -1;
 }
@@ -900,6 +905,7 @@ button:focus-visible .play__label {
   font-family: var(--font-display);
   font-weight: var(--weight-display);
   font-size: var(--text-2xl);
+  font-style: italic;
   letter-spacing: var(--tracking-display);
   line-height: 1.15;
 }
