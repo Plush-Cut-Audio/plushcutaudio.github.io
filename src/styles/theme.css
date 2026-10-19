@@ -105,7 +105,9 @@
   /* Motion ---------------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 450ms;            /* hovers, menus, filters */
-  --duration-signature: 1300ms; /* how long the logo takes to sign itself */
+  --duration-signature: 1200ms; /* how long the logo takes to sign itself */
+  --duration-arrive: 2400ms;    /* home page: how long the name, line and buttons take to fade in */
+  --stagger-arrive: 400ms;      /* home page: gap between each of them starting */
   --media-dim: 0.92;            /* image brightness at rest (1 = untouched) */
 }
 

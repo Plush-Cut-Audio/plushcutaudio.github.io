@@ -1,15 +1,15 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Swash from "@/components/Swash.astro";
-import Mark from "@/components/Mark.astro";
+import LogoReveal from "@/components/LogoReveal.astro";
 import PlayIcon from "@/components/PlayIcon.astro";
 import { site } from "@/data/site";
 ---
 
-<Base home>
+<Base home fullscreen>
   <section class="hero container">
     <h1 class="visually-hidden">{site.name}</h1>
-    <Mark animate class="hero__mark" />
+    <LogoReveal class="hero__mark" />
     <p class="wordmark hero__wordmark" aria-hidden="true">{site.name}</p>
     <p class="hero__descriptor">{site.descriptor}</p>
 

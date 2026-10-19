@@ -1,0 +1,154 @@
+---
+/**
+ * The hand-painted logo, painting itself in on the home page.
+ *
+ * Built from the painting's keyframes by scripts/build-logo-reveal.cjs, which
+ * writes two images (re-run it if the keyframes change):
+ *   /media/logo-paint.png   the finished painting (shown as a stencil in
+ *                           the theme's --color-logo)
+ *   /media/logo-reveal.png  when each pixel gets painted (red) and how much
+ *                           paint it has (blue)
+ * A canvas reveals the painting pixel by pixel in that order, then hands over
+ * to the still image. Without JavaScript, or with reduced motion, the still
+ * image simply shows. Length: --duration-signature in theme.css.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`logo-reveal ${className}`} data-logo-reveal aria-hidden="true">
+  <span class="logo-reveal__still"></span>
+  <canvas class="logo-reveal__canvas" width="580" height="907"></canvas>
+</div>
+<script is:inline>
+  // Hide the still before the first paint, so it doesn't flash before the animation
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const el = document.querySelector("[data-logo-reveal]");
+    el.classList.add("is-animating");
+    // Safety net: if the animation never runs, show the logo anyway
+    setTimeout(() => el.classList.remove("is-animating"), 6000);
+  }
+</script>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-logo-reveal].is-animating");
+  const canvas = root?.querySelector("canvas");
+  const ctx = canvas?.getContext("2d");
+
+  const finish = () => root?.classList.remove("is-animating");
+
+  if (root && canvas && ctx) {
+    const SOFT = 0.012; // the leading edge of the paint fades in over this much of the stroke
+    const START_DELAY = 250; // ms, matches the wordmark timing in global.css
+    // Speed ramp: the brush starts slow, speeds up through the middle and
+    // slows into the final flick. Both ends always come to a smooth stop;
+    // these set how long each slow part lasts:
+    const EASE_IN = 0.45; // 0–1: higher = a longer, slower start
+    const EASE_OUT = 0.1; // 0–1: lower = a longer, gentler landing
+
+    // CSS-style cubic-bezier(EASE_IN, 0, EASE_OUT, 1): solve for the curve's
+    // x at time p, then return its y
+    const bez = (a: number, b: number, s: number) => 3 * a * s * (1 - s) ** 2 + 3 * b * s * s * (1 - s) + s ** 3;
+    const ease = (p: number) => {
+      let lo = 0, hi = 1, s = p;
+      for (let i = 0; i < 24; i++) {
+        s = (lo + hi) / 2;
+        if (bez(EASE_IN, EASE_OUT, s) < p) lo = s;
+        else hi = s;
+      }
+      return bez(0, 1, s);
+    };
+
+    // (onload rather than img.decode(): decode can stall in a background tab)
+    const img = new Image();
+    const loaded = new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+    img.src = "/media/logo-reveal.png";
+    loaded.then(() => {
+      const w = canvas.width, h = canvas.height;
+      const scratch = document.createElement("canvas");
+      scratch.width = w;
+      scratch.height = h;
+      const sctx = scratch.getContext("2d", { willReadFrequently: true })!;
+      sctx.drawImage(img, 0, 0);
+      const src = sctx.getImageData(0, 0, w, h).data;
+
+      // Painted pixels, in the order they get painted
+      const order: number[] = [];
+      for (let i = 0; i < w * h; i++) if (src[i * 4 + 2]) order.push(i);
+      order.sort((a, b) => src[a * 4] - src[b * 4]);
+      const when = Float32Array.from(order, (i) => src[i * 4] / 255);
+      const paint = Uint8Array.from(order, (i) => src[i * 4 + 2]);
+
+      // Paint in the theme's logo color
+      const rgb = getComputedStyle(root).color.match(/[\d.]+/g)!.map(Number);
+      const frame = ctx.createImageData(w, h);
+      const px = frame.data;
+      for (const i of order) {
+        px[i * 4] = rgb[0];
+        px[i * 4 + 1] = rgb[1];
+        px[i * 4 + 2] = rgb[2];
+      }
+
+      const duration =
+        parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--duration-signature")) || 1300;
+      let start = 0;
+      let done = 0; // pixels fully painted so far
+
+      const draw = (now: number) => {
+        if (!start) start = now + START_DELAY;
+        const p = Math.min(1, Math.max(0, (now - start) / duration));
+        const t = ease(p) * (1 + SOFT); // run slightly past 1 so the last edge lands fully
+
+        // Fully painted pixels
+        while (done < order.length && when[done] <= t - SOFT) {
+          px[order[done] * 4 + 3] = paint[done];
+          done++;
+        }
+        // The soft leading edge
+        for (let k = done; k < order.length && when[k] <= t; k++) {
+          px[order[k] * 4 + 3] = paint[k] * ((t - when[k]) / SOFT);
+        }
+        ctx.putImageData(frame, 0, 0);
+
+        if (p < 1) requestAnimationFrame(draw);
+        else finish();
+      };
+      requestAnimationFrame(draw);
+    }, finish);
+  }
+</script>
+
+<style>
+  .logo-reveal {
+    position: relative;
+    aspect-ratio: 580 / 907;
+    color: var(--color-logo);
+  }
+  .logo-reveal__still,
+  .logo-reveal__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .logo-reveal__still {
+    background-color: currentColor;
+    -webkit-mask: url("/media/logo-paint.png") center / contain no-repeat;
+    mask: url("/media/logo-paint.png") center / contain no-repeat;
+  }
+  .logo-reveal__canvas {
+    display: none;
+  }
+  /* While painting: the canvas shows, the still waits */
+  .logo-reveal.is-animating .logo-reveal__canvas {
+    display: block;
+  }
+  .logo-reveal.is-animating .logo-reveal__still {
+    visibility: hidden;
+  }
+</style>

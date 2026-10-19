@@ -270,6 +270,7 @@ button:focus-visible .play__label {
   left: -4%;
   bottom: -0.3em;
   width: 108%;
+  max-width: none; /* the base reset caps svg at 100%, which shifted every swash left */
   height: 0.3em;
   color: var(--color-accent);
   clip-path: inset(0 100% 0 0);
@@ -289,33 +290,6 @@ button:focus-visible .play__label {
   color: var(--color-logo);
   height: auto;
   overflow: visible;
-}
-
-/* Hand-signing animation. The pen path is drawn from start to finish and
-   reveals the mark underneath. Speed: --duration-signature in theme.css */
-.mark-pen {
-  stroke-dasharray: 1 1;
-  stroke-dashoffset: 1;
-  /* each piece of the pen path draws in turn; timings come from logo.ts */
-  animation: sign calc(var(--duration-signature) * var(--for)) linear
-    calc(250ms + var(--duration-signature) * var(--at)) forwards;
-}
-@keyframes sign {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* A full copy of the mark fades in under the last stroke, so the finished
-   logo is always exact even if the pen pieces miss a sliver */
-.mark-settle {
-  opacity: 0;
-  animation: settle 400ms ease-out calc(var(--duration-signature) + 150ms) forwards;
-}
-@keyframes settle {
-  to {
-    opacity: 1;
-  }
 }
 
 .wordmark {
@@ -509,6 +483,7 @@ button:focus-visible .play__label {
   text-align: center;
 }
 .hero__mark {
+  flex-shrink: 0; /* never squeezed away */
   width: auto;
   height: clamp(13rem, 42svh, 24rem);
 }
@@ -537,7 +512,7 @@ button:focus-visible .play__label {
   transition: color var(--duration) var(--ease);
 }
 .hero__connect .swash {
-  bottom: -0.35em;
+  bottom: -0.25em;
   height: 0.35em;
 }
 .hero__connect:hover,
@@ -550,14 +525,15 @@ button:focus-visible .play__label {
 .hero__descriptor,
 .hero__actions {
   opacity: 0;
-  animation: arrive 1100ms var(--ease) forwards;
+  /* speed and spacing: --duration-arrive and --stagger-arrive in theme.css */
+  animation: arrive var(--duration-arrive) var(--ease) forwards;
   animation-delay: calc(var(--duration-signature) * 0.9);
 }
 .hero__descriptor {
-  animation-delay: calc(var(--duration-signature) * 0.9 + 150ms);
+  animation-delay: calc(var(--duration-signature) * 0.9 + var(--stagger-arrive));
 }
 .hero__actions {
-  animation-delay: calc(var(--duration-signature) * 0.9 + 300ms);
+  animation-delay: calc(var(--duration-signature) * 0.9 + var(--stagger-arrive) * 2);
 }
 @keyframes arrive {
   from {
@@ -1144,6 +1120,23 @@ body.is-fullscreen {
   flex-direction: column;
   min-height: 0;
 }
+.is-fullscreen .hero {
+  flex: 1;
+  min-height: 0;
+}
+/* Very short screens (a phone held sideways) can't fit these pages, so
+   they scroll normally there instead */
+@media (max-height: 500px) {
+  html:has(body.is-fullscreen) {
+    overflow: visible;
+  }
+  body.is-fullscreen {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    touch-action: auto;
+  }
+}
 .is-fullscreen .contact {
   flex: 1;
   min-height: 0;
@@ -1157,6 +1150,9 @@ body.is-fullscreen {
   line-height: 1.2;
 }
 .contact__email .swash {
+  /* starts right under the first letter; the thin tail runs a little past the end */
+  left: 0.05em; /* the "i" starts a hair inside the text box */
+  width: 104%;
   bottom: -0.2em;
   height: 0.22em;
 }
@@ -1281,14 +1277,6 @@ body.is-fullscreen {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .mark-pen {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .mark-settle {
-    animation: none;
-    opacity: 1;
   }
   .hero__wordmark,
   .hero__descriptor,

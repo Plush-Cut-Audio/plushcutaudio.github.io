@@ -127,7 +127,7 @@ export const services = [
 --------------------------------------------------------------------------- */
 export const studioWork = [
   { title: "ALL GOOD THINGS", studio: "Scheherazade Games", year: "2026", image: "/media/projects/all-good-things.jpg", reel: "https://youtu.be/vgXo7YlZy9g" },
-  { title: "Coming Soon...", year: "2026", image: IMG},
+  { title: "Coming Soon...", year: "2026", image: "/media/projects/remfall.jpg"},
 ];
 
 export const teamCredits = [
@@ -234,7 +234,7 @@ export const team = [
 --------------------------------------------------------------------------- */
 export const about = {
   /** The fixed start of the vision line. */
-  vision: "escape the clutter",
+  vision: "escape clutter",
   /** Typed after it one at a time, in this order, then repeating. */
   visionEndings: ["through sound", "with music", "through art", "with code"],
   /** Optional team photo at the top of the "Read more" pop-up, e.g.

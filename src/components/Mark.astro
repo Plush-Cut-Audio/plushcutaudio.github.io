@@ -1,20 +1,19 @@
 ---
 /**
- * The signature mark (temporary logo).
- * <Mark />          static mark
- * <Mark animate />  signs itself on page load (used once, on the home page)
+ * The signature mark (temporary logo), as a crisp vector: used small, in the
+ * header and footer. The home page shows the hand-painted version instead
+ * (src/components/LogoReveal.astro).
  * Its color comes from --color-logo in theme.css, or from the CSS `color`
  * of whatever class you pass in.
  */
-import { LOGO_VIEWBOX, LOGO_SHAPE, LOGO_PEN } from "@/data/logo";
+import { LOGO_VIEWBOX, LOGO_SHAPE } from "@/data/logo";
 
 interface Props {
-  animate?: boolean;
   class?: string;
   label?: string;
 }
 
-const { animate = false, class: className = "", label } = Astro.props;
+const { class: className = "", label } = Astro.props;
 ---
 
 <svg
@@ -25,32 +24,5 @@ const { animate = false, class: className = "", label } = Astro.props;
   aria-hidden={label ? undefined : "true"}
   focusable="false"
 >
-  {animate && (
-    <defs>
-      <mask id="signature-pen" maskUnits="userSpaceOnUse" x="-40" y="-40" width="660" height="980">
-        {LOGO_PEN.map((seg) => (
-          <path
-            class="mark-pen"
-            d={seg.d}
-            pathLength="1"
-            fill="none"
-            stroke="#fff"
-            stroke-width={seg.w}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style={`--at:${seg.at};--for:${seg.for}`}
-          />
-        ))}
-      </mask>
-    </defs>
-  )}
-  <path
-    d={LOGO_SHAPE}
-    fill="currentColor"
-    fill-rule="evenodd"
-    mask={animate ? "url(#signature-pen)" : undefined}
-  />
-  {animate && (
-    <path class="mark-settle" d={LOGO_SHAPE} fill="currentColor" fill-rule="evenodd" />
-  )}
+  <path d={LOGO_SHAPE} fill="currentColor" fill-rule="evenodd" />
 </svg>
