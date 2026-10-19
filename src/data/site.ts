@@ -159,14 +159,6 @@ export const team = [
     website: "https://www.dannycastroaudio.com/",
   },
   {
-    name: "Johh Chung",
-    disciplines: ["Music", "Sound Design"],
-    headshot: "/media/headshots/johh.jpg",
-    reel: "https://drive.google.com/file/d/1vdJ77lbWMePWJS9lltEYF9aja8GmcKKU/view", // Need to update to add second reel
-    bio: "Hello! My name is Joh, and I am a composer and sound designer. I have been working in mostly games for the last few years, but I have done film and animated projects as well. Before I started composing and producing, I used to perform a wide range of musical styles as a pianist and percussionist. Very happy and excited to be a part of PCA. :D",
-    website: "https://www.johhmusic.com/",
-  },
-  {
     name: "Malachi Gregory",
     disciplines: ["Music", "Sound Design", "Technical"],
     headshot: "/media/headshots/malachi.jpg",
@@ -187,7 +179,7 @@ export const team = [
     disciplines: ["Music", "Sound Design"],
     headshot: "/media/headshots/will.jpg",
     reel: "https://youtu.be/LYjAvDZUDyk?si=gJRQVEgApZ8hO7bX",
-    bio: "Will Heilbraun is an audio engineer, sound designer, and musician. Will works with a variety of artistic mediums, including classical and modern music, game scoring and development, and film. \n\nWith Will's early interest in all things involving audio, he quickly took on a variety of roles in his local community. He became a trusted figure in the community, bringing his sonic identity and knowledge to support rising artists and fellow audio professionals. \n\nAfter graduating from Indiana University's Jacob School of Music, Will has a B.S. in Audio Engineering and Sound Production. Soon after graduating, Will moved to Los Angeles and began work as a dialogue recording engineer at One Line Studios as well as a Monitor engineer at Hollywood scoring. In addition, Will freelances and works on multiple game projects and clients. \n\nAudio has been a motivating focal point through all aspects of Will's life. Will strives for excellence on every project, with an experienced background and commitment to deliver professional audio results with great efficiency.",
+    bio: "Will Heilbraun is an audio engineer, sound designer, and musician. Will works with a variety of artistic mediums, including classical and modern music, game scoring and development, and film. \n\nWith Will's early interest in all things involving audio, he quickly took on a variety of roles in his local community. He became a trusted figure in the community, bringing his sonic identity and knowledge to support rising artists and fellow audio professionals. \n\nAfter graduating from Indiana University's Jacobs School of Music, Will has a B.S. in Audio Engineering and Sound Production. Soon after graduating, Will moved to Los Angeles and began work as a dialogue recording engineer at One Line Studios as well as a Monitor engineer at Hollywood scoring. In addition, Will freelances and works on multiple game projects and clients. \n\nAudio has been a motivating focal point through all aspects of Will's life. Will strives for excellence on every project, with an experienced background and commitment to deliver professional audio results with great efficiency.",
     website: "https://williamheilbraun.weebly.com/",
   },
   {
@@ -197,6 +189,14 @@ export const team = [
     reel: "https://s.disco.ac/ouhawfnrmxcn",
     bio: "Annika describes herself first and foremost as a creative – as a media composer, orchestrator, pianist, and artistic collaborator, she finds imagination, curiosity and problem-solving to be at the heart of her creative endeavors. \n\nA graduate of the distinguished USC Screen Scoring Master's program, Annika has scored several short films and conducted her recording sessions at studios including Warner Brothers, Hollywood Scoring, and Bandrika Studios. She describes her musical identity as a textural composer, where she gets to build unique soundscapes, design harmonic progressions, meld acoustic orchestral instruments with electronics and synths, and immerse the audience with motors and motifs that are the signature of a story’s narrative world. She especially loves scoring for narratives involving thriller, suspense, sci-fi, and drama genres. \n\nAnnika has scored several short films spanning different genres, and will be scoring her first feature film later this year. She has scored projects for World View Productions and The Coca-Cola Company, recorded with Joy Music House, and written for numerous ensembles in artist residencies, including for Grammy-Award-winning groups The Crossing and The Parker Quartet. She is currently assisting a film composer and is also freelance orchestrating for other composers, working on recent projects including two short films, a video game, four orchestral works, a jazz combo, a marching band anthem, and a new-music percussion piece. \n\nAnnika is a graduate of the Harvard/Berklee College of Music dual program, where she received her B.A. in Computer Science from Harvard while pursuing Screen Scoring at Berklee.",
     website: "https://annikahuprikarmusic.com/",
+  },
+  {
+    name: "johh",
+    disciplines: ["Music", "Sound Design"],
+    headshot: "/media/headshots/johh.jpg",
+    reel: "https://drive.google.com/file/d/1vdJ77lbWMePWJS9lltEYF9aja8GmcKKU/view", // Need to update to add second reel
+    bio: "Hello! My name is johh, and I am a composer and sound designer. I have been working in mostly games for the last few years, but I have done film and animated projects as well. Before I started composing and producing, I used to perform a wide range of musical styles as a pianist and percussionist. Very happy and excited to be a part of PCA. :D",
+    website: "https://www.johhmusic.com/",
   },
   {
     name: "Kiara Lin",
