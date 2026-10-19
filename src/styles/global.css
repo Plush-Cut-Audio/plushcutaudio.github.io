@@ -932,6 +932,31 @@ button:focus-visible .play__label {
   text-align: center;
   padding-top: clamp(6rem, 9vw, 8rem);
 }
+/* One screen, no scrolling. On touch screens a swipe moves the follow dot
+   instead of the page; pinch-to-zoom still works. */
+html:has(body.is-fullscreen) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.is-fullscreen {
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: pinch-zoom;
+}
+.is-fullscreen main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.is-fullscreen .contact {
+  flex: 1;
+  min-height: 0;
+}
+.is-fullscreen .site-footer {
+  margin-top: 0;
+}
 .contact__email {
   font-size: var(--text-xl);
   letter-spacing: -0.01em;

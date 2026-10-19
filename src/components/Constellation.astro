@@ -33,7 +33,8 @@
     let colors = { dot: "#888", accent: "#d3271d" };
 
     // The pointer circle eases toward the target; alpha fades it in and out
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0, alpha: 0, active: false };
+    // overLink hides it while the pointer is on a link or button
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, alpha: 0, active: false, overLink: false };
 
     const readColors = () => {
       const s = getComputedStyle(document.documentElement);
@@ -139,7 +140,8 @@
       const ease = reduceMotion.matches ? 1 : SETTINGS.pointerEase;
       pointer.x += (pointer.tx - pointer.x) * ease;
       pointer.y += (pointer.ty - pointer.y) * ease;
-      pointer.alpha += ((pointer.active ? 1 : 0) - pointer.alpha) * 0.08;
+      const shown = pointer.active && !pointer.overLink;
+      pointer.alpha += ((shown ? 1 : 0) - pointer.alpha) * (shown ? 0.08 : 0.2);
       draw();
       requestAnimationFrame(step);
     };
@@ -153,6 +155,7 @@
         pointer.y = e.clientY;
       }
       pointer.active = true;
+      pointer.overLink = e.target instanceof Element && Boolean(e.target.closest("a, button"));
     };
     const releasePointer = (e: PointerEvent) => {
       // A finger lifting hides the circle; a mouse keeps it until it leaves

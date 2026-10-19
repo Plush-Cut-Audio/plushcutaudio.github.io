@@ -15,9 +15,14 @@ interface Props {
   title?: string;
   description?: string;
   home?: boolean;
+  /** Fit the page to one screen with no scrolling (the Connect page). */
+  fullscreen?: boolean;
+  /** Show the email address in the footer. */
+  footerEmail?: boolean;
 }
 
-const { title, description = site.description, home = false } = Astro.props;
+const { title, description = site.description, home = false, fullscreen = false, footerEmail = true } = Astro.props;
+const bodyClass = [home && "is-home", fullscreen && "is-fullscreen"].filter(Boolean).join(" ") || undefined;
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og.png", Astro.site);
@@ -66,13 +71,13 @@ const ogImage = new URL("/og.png", Astro.site);
       })();
     </script>
   </head>
-  <body class={home ? "is-home" : undefined} data-reel-mode={reelMode}>
+  <body class={bodyClass} data-reel-mode={reelMode}>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer email={footerEmail} />
     <ReelDialog />
     <ThemePicker />
     <script>
