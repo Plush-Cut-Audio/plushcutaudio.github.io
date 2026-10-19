@@ -30,7 +30,7 @@ export const site = {
   descriptor: "Exquisite Sound for Interactive Media",
   /** Used by search engines and link previews. */
   description:
-    "Artful audio for interactive media. Music, sound design, dialogue and implementation, carefully crafted by hand.",
+    "Artful audio for interactive media.",
   url: "https://plushcutaudio.com",
   email: "info@plushcutaudio.com", 
   /** Shown on the contact page. Leave empty ("") to hide it. */
