@@ -234,7 +234,7 @@ export const team = [
 --------------------------------------------------------------------------- */
 export const about = {
   /** The fixed start of the vision line. */
-  vision: "escape the clutter of the world",
+  vision: "escape the clutter",
   /** Typed after it one at a time, in this order, then repeating. */
   visionEndings: ["through sound", "with music", "through art", "with code"],
   /** Optional team photo at the top of the "Read more" pop-up, e.g.
