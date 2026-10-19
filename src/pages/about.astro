@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { about } from "@/data/site";
+import Swash from "@/components/Swash.astro";
+import { about, site } from "@/data/site";
 
 // Either a list of paragraphs or one text with blank lines ("\n\n") between them
 const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs : about.paragraphs.split(/\n\s*\n/))
@@ -8,17 +9,81 @@ const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs
   .filter(Boolean);
 ---
 
-<Base title="About">
+<Base title="About" fullscreen>
   <section class="vision container">
     <span class="vision__mark" aria-hidden="true"></span>
-    <h1 class="vision__statement">{about.vision}</h1>
+    <h1 class="vision__statement">
+      <span class="visually-hidden">{about.vision} {about.visionEndings[0]}</span>
+      <!-- The visible line: the ending types, holds, deletes and moves on.
+           Every ending sits invisibly in the same spot so the line keeps the
+           width of the longest one and the start never shifts. -->
+      <span aria-hidden="true">
+        {about.vision}{" "}
+        <span class="typer" data-typer={JSON.stringify(about.visionEndings)}>
+          {about.visionEndings.map((e) => <span class="typer__sizer">{e}</span>)}
+          <span class="typer__live"><span data-typer-text>{about.visionEndings[0]}</span><span class="typer__caret"></span></span>
+        </span>
+      </span>
+    </h1>
+    {paragraphs.length > 0 && (
+      <button class="vision__more swash-link" type="button" data-dialog-open="about-more" aria-haspopup="dialog">
+        Read more
+        <Swash />
+      </button>
+    )}
   </section>
 
-  <section class="container">
-    <div class="about-body">
-      {paragraphs.map((p) => (
-        <p>{p}</p>
-      ))}
+  <script>
+    // Typing effect for the end of the vision line. Starts with the first
+    // ending already shown, holds it, then deletes and types the next.
+    const TIMING = {
+      type: 85, // ms per letter typed
+      erase: 40, // ms per letter deleted
+      hold: 2400, // ms a finished ending stays up
+      gap: 450, // ms of empty space before the next ending types
+    };
+
+    const typer = document.querySelector<HTMLElement>("[data-typer]");
+    const text = typer?.querySelector<HTMLElement>("[data-typer-text]");
+    const endings: string[] = typer ? JSON.parse(typer.dataset.typer || "[]") : [];
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (typer && text && endings.length > 1 && !still) {
+      const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const setTyping = (on: boolean) => typer.classList.toggle("is-typing", on);
+
+      (async () => {
+        for (let i = 0; ; i = (i + 1) % endings.length) {
+          const word = endings[i];
+          if (i > 0 || text.textContent !== word) {
+            setTyping(true);
+            for (let n = 1; n <= word.length; n++) {
+              text.textContent = word.slice(0, n);
+              await wait(TIMING.type);
+            }
+          }
+          setTyping(false);
+          await wait(TIMING.hold);
+          setTyping(true);
+          for (let n = word.length - 1; n >= 0; n--) {
+            text.textContent = word.slice(0, n);
+            await wait(TIMING.erase);
+          }
+          setTyping(false);
+          await wait(TIMING.gap);
+        }
+      })();
+    }
+  </script>
+
+  <!-- The About text, opened by "Read more" above -->
+  <dialog class="reading" id="about-more" aria-labelledby="about-more-title" data-dialog>
+    <div class="reading__panel">
+      <button class="reading__close" type="button" data-dialog-close>Close</button>
+      <h2 class="reading__title" id="about-more-title">About {site.name}</h2>
+      <div class="reading__body">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
     </div>
-  </section>
+  </dialog>
 </Base>

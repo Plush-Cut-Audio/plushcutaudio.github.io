@@ -241,7 +241,10 @@ export const team = [
    About page
 --------------------------------------------------------------------------- */
 export const about = {
-  vision: "escape the clutter of the world through sound",
+  /** The fixed start of the vision line. */
+  vision: "escape the clutter of the world",
+  /** Typed after it one at a time, in this order, then repeating. */
+  visionEndings: ["through sound", "with music", "through art", "with code"],
   paragraphs: "Plush Cut Audio represents the next generation of bespoke sound. Founded by Ariel Sol in 2026, the collective formed from a group of Game Audio Network Guild awardees and Game Audio Diversity Alliance scholars on a mission to collaborate. From music to programming, artistry is our center."
 };
 
