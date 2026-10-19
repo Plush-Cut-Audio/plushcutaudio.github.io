@@ -94,8 +94,10 @@ const { class: className = "" } = Astro.props;
         px[i * 4 + 2] = rgb[2];
       }
 
-      const duration =
-        parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--duration-signature")) || 1300;
+      // In ms. The published CSS is minified, which rewrites "1200ms" as
+      // "1.2s", so read the unit rather than assuming milliseconds.
+      const raw = getComputedStyle(document.documentElement).getPropertyValue("--duration-signature").trim();
+      const duration = (parseFloat(raw) * (/\ds$/.test(raw) ? 1000 : 1)) || 1300;
       let start = 0;
       let done = 0; // pixels fully painted so far
 
