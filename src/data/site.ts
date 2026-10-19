@@ -20,8 +20,6 @@ const IMG = "/media/placeholder.svg"; // placeholder image used everywhere for n
 const REEL = "/media/placeholder-reel.mp4"; // placeholder video used everywhere for now
 const LOREM_SHORT =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.";
-const LOREM =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
 
 /* ---------------------------------------------------------------------------
    Studio basics
@@ -90,32 +88,28 @@ export const DISCIPLINES = ["Music", "Sound Design", "Dialogue", "Technical"];
 /* ---------------------------------------------------------------------------
    Services page
 --------------------------------------------------------------------------- */
-export const servicesIntro = LOREM_SHORT;
+export const servicesIntro = "Plush Cut Audio manages the full audio pipeline from ideation to shipping and beyond.";
 
 export const services = [
   {
     name: "Music",
-    text: LOREM,
-    includes: ["Original score", "Adaptive and interactive music", "Themes and sonic identity"],
-    image: IMG,
+    includes: ["Composition and MIDI Mockups", "Session Prep and Recording", "Editing and Mixing"],
+    image: "/media/services/music.jpg", // TEMP: Pexels stock photo
   },
   {
     name: "Sound Design",
-    text: LOREM,
-    includes: ["Gameplay and UI sound", "Ambience and worlds", "Creatures, foley and cinematics"],
-    image: IMG,
+    includes: ["Sound Editing and Synthesis", "Foley and Audio Sourcing", "Spatial Audio Systems"],
+    image: "/media/services/sound-design.jpg", // TEMP: Pexels stock photo
   },
   {
     name: "Dialogue",
-    text: LOREM,
-    includes: ["Casting and direction", "Recording and editing", "Processing and localization"],
-    image: IMG,
+    includes: ["Casting and Direction", "Recording and Editing", "Processing and Localization"],
+    image: "/media/services/dialogue.jpg", // TEMP: Pexels stock photo
   },
   {
     name: "Technical Audio",
-    text: LOREM,
-    includes: ["Wwise and FMOD", "Unity and Unreal Engine", "Systems, tools and mixing"],
-    image: IMG,
+    includes: ["Wwise and FMOD", "Unity and Unreal Engine", "Adaptive Audio Systems"],
+    image: "/media/services/technical-audio.jpg", // TEMP: Pexels stock photo
   },
 ];
 
@@ -198,8 +192,8 @@ export const team = [
     name: "johh",
     disciplines: ["Music", "Sound Design"],
     headshot: "/media/headshots/johh.jpg",
-    reel: "https://drive.google.com/file/d/1vdJ77lbWMePWJS9lltEYF9aja8GmcKKU/view", // Need to update to add second reel
-    bio: "Hello! My name is johh, and I am a composer and sound designer. I have been working in mostly games for the last few years, but I have done film and animated projects as well. Before I started composing and producing, I used to perform a wide range of musical styles as a pianist and percussionist. Very happy and excited to be a part of PCA. :D",
+    reel: "https://www.johhmusic.com/work-1",
+    bio: "Starting off as a pianist and orchestral percussionist, Joh has immersed herself in a wide range of musical styles and forms from a young age. Her many years in various chamber groups, wind ensembles, and marching bands cultivated her musical instincts and intellect. After her secondary schooling, Joh further developed her musical education and knowledge at the University of Southern California’s Thornton School of Music, studying Music Industry, Music Production, and Music Composition. \n\nShe has composed and created sound design for multiple projects recognized at various international festivals like BAFTA (Free Will), Tokyo Indie Games Summit, Tokyo Game Show (Closure- USC Audience Choice Standout Sound Design), BostonFIG (nudge- USC Powerful Message), and Central Coast Film Festival AU (REPLACED).",
     website: "https://www.johhmusic.com/",
   },
   {

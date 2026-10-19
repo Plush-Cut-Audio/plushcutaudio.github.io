@@ -581,16 +581,12 @@ button:focus-visible .play__label {
   font-size: var(--text-lg);
   font-weight: var(--weight-body);
 }
-.service__text {
-  margin-top: 0.6rem;
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  max-width: 40ch;
-}
 .service__includes {
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   display: grid;
   gap: 0.2rem;
+  max-width: 40ch;
+  color: var(--color-muted);
   font-size: var(--text-sm);
 }
 
