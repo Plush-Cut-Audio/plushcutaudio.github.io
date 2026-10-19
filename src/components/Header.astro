@@ -4,7 +4,7 @@ import Mark from "@/components/Mark.astro";
 import { site, nav } from "@/data/site";
 
 interface Props {
-  /** Show the menu. Off on bare pages, which keep only the logo and name. */
+  /** Show the menu. Off leaves only the logo and name in the corner. */
   menu?: boolean;
 }
 const { menu = true } = Astro.props;

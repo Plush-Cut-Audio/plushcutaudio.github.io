@@ -889,6 +889,17 @@ button:focus-visible .play__label {
   flex: 1;
   min-height: 0;
 }
+/* The About page sits darker than the rest of the site: each theme's own
+   background mixed toward black. Lower the % for darker. */
+:root {
+  --page-bg: var(--color-bg); /* the theme's normal background, kept for mixing */
+}
+body:has(.vision) {
+  --color-bg: color-mix(in srgb, var(--page-bg) 50%, #000);
+}
+[data-theme="gallery"] body:has(.vision) {
+  --color-bg: color-mix(in srgb, var(--page-bg) 92%, #000); /* light theme: a gentle step */
+}
 /* The hand-painted mark (public/media/logo-brush.png) used as a stencil,
    so it takes the theme's text color while keeping the brush texture.
    opacity sets how present it is: 0.01 is just a hint. */
