@@ -891,7 +891,7 @@ button:focus-visible .play__label {
 }
 /* The hand-painted mark (public/media/logo-brush.png) used as a stencil,
    so it takes the theme's text color while keeping the brush texture.
-   opacity sets how present it is: 0.1 is a whisper. */
+   opacity sets how present it is: 0.01 is just a hint. */
 .vision__mark {
   position: absolute;
   top: 50%;
@@ -903,7 +903,7 @@ button:focus-visible .play__label {
   background-color: var(--color-text);
   -webkit-mask: url("/media/logo-brush.png") center / contain no-repeat;
   mask: url("/media/logo-brush.png") center / contain no-repeat;
-  opacity: 0.1;
+  opacity: 0.01;
   z-index: -1;
 }
 /* A small line in a lot of space, always on one line */
@@ -911,7 +911,9 @@ button:focus-visible .play__label {
   white-space: nowrap;
   font-family: var(--font-display);
   font-weight: var(--weight-body);
-  font-size: var(--text-sm);
+  /* Two steps up the scale, but never wider than the screen: the full line
+     is about 21 times its font size wide */
+  font-size: min(var(--text-lg), calc((100vw - 2 * var(--gutter)) / 21));
   font-style: italic;
   letter-spacing: 0.03em;
   line-height: 1.5;
@@ -927,6 +929,9 @@ button:focus-visible .play__label {
 }
 .typer__sizer {
   visibility: hidden;
+}
+.typer__accent {
+  color: var(--color-accent); /* sound, music, art, code */
 }
 .typer__caret {
   display: inline-block;
@@ -949,12 +954,6 @@ button:focus-visible .play__label {
 @media (prefers-reduced-motion: reduce) {
   .typer__caret {
     display: none;
-  }
-}
-/* Very narrow phones: a touch smaller so the line still fits */
-@media (max-width: 360px) {
-  .vision__statement {
-    font-size: var(--text-xs);
   }
 }
 .vision__more {

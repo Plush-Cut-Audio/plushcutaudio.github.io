@@ -7,9 +7,13 @@ import { about, site } from "@/data/site";
 const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs : about.paragraphs.split(/\n\s*\n/))
   .map((p) => p.trim())
   .filter(Boolean);
+
+// The last word of each ending is shown in the accent color
+const first = about.visionEndings[0];
+const cut = first.lastIndexOf(" ") + 1;
 ---
 
-<Base title="About" fullscreen>
+<Base title="About" fullscreen bare>
   <section class="vision container">
     <span class="vision__mark" aria-hidden="true"></span>
     <h1 class="vision__statement">
@@ -21,7 +25,7 @@ const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs
         {about.vision}{" "}
         <span class="typer" data-typer={JSON.stringify(about.visionEndings)}>
           {about.visionEndings.map((e) => <span class="typer__sizer">{e}</span>)}
-          <span class="typer__live"><span data-typer-text>{about.visionEndings[0]}</span><span class="typer__caret"></span></span>
+          <span class="typer__live"><span data-typer-text><span data-typer-lead>{first.slice(0, cut)}</span><span class="typer__accent" data-typer-accent>{first.slice(cut)}</span></span><span class="typer__caret"></span></span>
         </span>
       </span>
     </h1>
@@ -45,12 +49,21 @@ const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs
 
     const typer = document.querySelector<HTMLElement>("[data-typer]");
     const text = typer?.querySelector<HTMLElement>("[data-typer-text]");
+    const lead = typer?.querySelector<HTMLElement>("[data-typer-lead]");
+    const accent = typer?.querySelector<HTMLElement>("[data-typer-accent]");
     const endings: string[] = typer ? JSON.parse(typer.dataset.typer || "[]") : [];
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (typer && text && endings.length > 1 && !still) {
+    if (typer && text && lead && accent && endings.length > 1 && !still) {
       const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const setTyping = (on: boolean) => typer.classList.toggle("is-typing", on);
+      // Show the first n letters, with the last word in the accent color
+      const show = (word: string, n: number) => {
+        const cut = word.lastIndexOf(" ") + 1;
+        const shown = word.slice(0, n);
+        lead.textContent = shown.slice(0, cut);
+        accent.textContent = shown.slice(cut);
+      };
 
       (async () => {
         for (let i = 0; ; i = (i + 1) % endings.length) {
@@ -58,7 +71,7 @@ const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs
           if (i > 0 || text.textContent !== word) {
             setTyping(true);
             for (let n = 1; n <= word.length; n++) {
-              text.textContent = word.slice(0, n);
+              show(word, n);
               await wait(TIMING.type);
             }
           }
@@ -66,7 +79,7 @@ const paragraphs: string[] = (Array.isArray(about.paragraphs) ? about.paragraphs
           await wait(TIMING.hold);
           setTyping(true);
           for (let n = word.length - 1; n >= 0; n--) {
-            text.textContent = word.slice(0, n);
+            show(word, n);
             await wait(TIMING.erase);
           }
           setTyping(false);

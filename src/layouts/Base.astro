@@ -19,9 +19,11 @@ interface Props {
   fullscreen?: boolean;
   /** Show the email address in the footer. */
   footerEmail?: boolean;
+  /** Only the logo and name in the corner: no menu, no footer (the About page). */
+  bare?: boolean;
 }
 
-const { title, description = site.description, home = false, fullscreen = false, footerEmail = true } = Astro.props;
+const { title, description = site.description, home = false, fullscreen = false, footerEmail = true, bare = false } = Astro.props;
 const bodyClass = [home && "is-home", fullscreen && "is-fullscreen"].filter(Boolean).join(" ") || undefined;
 const pageTitle = title ? `${title} | ${site.name}` : site.name;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -73,11 +75,11 @@ const ogImage = new URL("/og.png", Astro.site);
   </head>
   <body class={bodyClass} data-reel-mode={reelMode}>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header />
+    <Header menu={!bare} />
     <main id="main">
       <slot />
     </main>
-    <Footer email={footerEmail} />
+    {!bare && <Footer email={footerEmail} />}
     <ReelDialog />
     <ThemePicker />
     <script>
