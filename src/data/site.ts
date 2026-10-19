@@ -137,10 +137,10 @@ export const studioWork = [
 ];
 
 export const teamCredits = [
-  { title: "The Unrealtor", studio: "Homestyle Interactive", year: "2026", disciplines: ["Sound Design", "Technical"], members: ["Danny Castro", "Ariel Sol"], image: "/media/projects/the-unrealtor.jpg" },
+  { title: "The Unrealtor", studio: "Homestyle Interactive", year: "2026", members: ["Danny Castro", "Ariel Sol"], image: "/media/projects/the-unrealtor.jpg" },
   { title: "Coming Soon...", image: IMG },
   /* 
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", disciplines: ["Sound Design"], members: ["TEMP NAME", "TEMP NAME"], image: IMG },
+  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", members: ["TEMP NAME", "TEMP NAME"], image: IMG },
   */
 ];
 
