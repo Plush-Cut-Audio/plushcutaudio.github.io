@@ -11,5 +11,6 @@ export default defineConfig({
   // Old addresses that should forward to new ones
   redirects: {
     "/portfolio": "/projects",
+    "/contact": "/connect",
   },
 });

@@ -35,7 +35,10 @@ export const site = {
     "Artful audio for interactive media. Music, sound design, dialogue and implementation, carefully crafted by hand.",
   url: "https://plushcutaudio.com",
   email: "info@plushcutaudio.com", 
-  location: "Remote", // PLACEHOLDER
+  /** Shown on the contact page. Leave empty ("") to hide it. */
+  location: "",
+  /** true shows the social links below in the footer and on the contact page. */
+  showSocials: false,
   socials: [
     // PLACEHOLDERS. Delete any you don't use; add more in the same shape.
     { label: "LinkedIn", url: "https://www.linkedin.com/" },
@@ -46,6 +49,9 @@ export const site = {
    *  A video file in /public/media or a YouTube/Vimeo link. */
   showreel: { src: REEL },
 };
+
+/** The social links to show: none while site.showSocials is false. */
+export const socials = site.showSocials ? site.socials : [];
 
 /**
  * How team and project reels open when clicked:
@@ -62,7 +68,7 @@ export const nav = [
   { label: "Projects", href: "/projects/" },
   { label: "Team", href: "/team/" },
   { label: "About", href: "/about/" },
-  { label: "Contact", href: "/contact/" },
+  { label: "Connect", href: "/connect/" },
 ];
 
 /* ---------------------------------------------------------------------------
@@ -240,9 +246,9 @@ export const about = {
 };
 
 /* ---------------------------------------------------------------------------
-   Contact page
+   Connect page
 --------------------------------------------------------------------------- */
 export const contact = {
-  heading: "bring your game to life",
+  /** The line under the email address. */
   note: "Contact us to collaborate. Plush Cut Audio is a remote team with physical hubs in Los Angeles and New York.",
 };

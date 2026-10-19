@@ -1,0 +1,191 @@
+---
+/**
+ * Interactive background (contact page): small dots drift slowly and draw
+ * a line to each other when close. A circle in the accent color follows the
+ * mouse (or finger) and links to nearby dots too.
+ * Colors come from the theme: dots and lines use --color-muted, the
+ * pointer circle uses --color-accent. Tune the numbers in SETTINGS below.
+ */
+---
+
+<canvas class="constellation" aria-hidden="true" data-constellation></canvas>
+
+<script>
+  const SETTINGS = {
+    density: 15000, // screen area (px²) per dot: lower = more dots
+    maxDots: 90,
+    speed: 0.18, // drift, in px per frame
+    linkDistance: 140, // dots closer than this are joined
+    pointerLinkDistance: 190,
+    pointerRadius: 6,
+    pointerEase: 0.14, // how quickly the circle catches up (0–1)
+  };
+
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-constellation]");
+  const ctx = canvas?.getContext("2d");
+
+  if (canvas && ctx) {
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    type Dot = { x: number; y: number; vx: number; vy: number; r: number };
+    let dots: Dot[] = [];
+    let width = 0;
+    let height = 0;
+    let colors = { dot: "#888", accent: "#d3271d" };
+
+    // The pointer circle eases toward the target; alpha fades it in and out
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, alpha: 0, active: false };
+
+    const readColors = () => {
+      const s = getComputedStyle(document.documentElement);
+      colors = {
+        dot: s.getPropertyValue("--color-muted").trim() || colors.dot,
+        accent: s.getPropertyValue("--color-accent").trim() || colors.accent,
+      };
+    };
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(SETTINGS.maxDots, Math.round((width * height) / SETTINGS.density));
+      // Keep the dots already on screen; add or drop to match the new size
+      dots = dots.filter((d) => d.x <= width && d.y <= height).slice(0, count);
+      while (dots.length < count) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = SETTINGS.speed * (0.4 + Math.random() * 0.6);
+        dots.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          r: 1.2 + Math.random() * 1.4,
+        });
+      }
+    };
+
+    const line = (ax: number, ay: number, bx: number, by: number, alpha: number) => {
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(bx, by);
+      ctx.stroke();
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineWidth = 1;
+
+      // Dot-to-dot lines, fading out with distance
+      ctx.strokeStyle = colors.dot;
+      const max = SETTINGS.linkDistance;
+      for (let i = 0; i < dots.length; i++) {
+        const a = dots[i];
+        for (let j = i + 1; j < dots.length; j++) {
+          const b = dots[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          if (Math.abs(dx) > max || Math.abs(dy) > max) continue;
+          const d = Math.hypot(dx, dy);
+          if (d < max) line(a.x, a.y, b.x, b.y, (1 - d / max) * 0.35);
+        }
+      }
+
+      // Pointer-to-dot lines
+      if (pointer.alpha > 0.01) {
+        ctx.strokeStyle = colors.accent;
+        const pmax = SETTINGS.pointerLinkDistance;
+        for (const d of dots) {
+          const dist = Math.hypot(d.x - pointer.x, d.y - pointer.y);
+          if (dist < pmax) line(pointer.x, pointer.y, d.x, d.y, (1 - dist / pmax) * 0.5 * pointer.alpha);
+        }
+      }
+
+      // Dots
+      ctx.fillStyle = colors.dot;
+      ctx.globalAlpha = 0.6;
+      for (const d of dots) {
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Pointer circle
+      if (pointer.alpha > 0.01) {
+        ctx.fillStyle = colors.accent;
+        ctx.globalAlpha = pointer.alpha;
+        ctx.beginPath();
+        ctx.arc(pointer.x, pointer.y, SETTINGS.pointerRadius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const step = () => {
+      if (!reduceMotion.matches) {
+        for (const d of dots) {
+          d.x += d.vx;
+          d.y += d.vy;
+          // Wrap around the edges so the field never empties
+          if (d.x < -10) d.x = width + 10;
+          else if (d.x > width + 10) d.x = -10;
+          if (d.y < -10) d.y = height + 10;
+          else if (d.y > height + 10) d.y = -10;
+        }
+      }
+      const ease = reduceMotion.matches ? 1 : SETTINGS.pointerEase;
+      pointer.x += (pointer.tx - pointer.x) * ease;
+      pointer.y += (pointer.ty - pointer.y) * ease;
+      pointer.alpha += ((pointer.active ? 1 : 0) - pointer.alpha) * 0.08;
+      draw();
+      requestAnimationFrame(step);
+    };
+
+    const movePointer = (e: PointerEvent) => {
+      pointer.tx = e.clientX;
+      pointer.ty = e.clientY;
+      // Appear where the pointer is rather than gliding in from the corner
+      if (!pointer.active && pointer.alpha < 0.05) {
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+      }
+      pointer.active = true;
+    };
+    const releasePointer = (e: PointerEvent) => {
+      // A finger lifting hides the circle; a mouse keeps it until it leaves
+      if (e.pointerType !== "mouse") pointer.active = false;
+    };
+
+    window.addEventListener("pointermove", movePointer, { passive: true });
+    window.addEventListener("pointerdown", movePointer, { passive: true });
+    window.addEventListener("pointerup", releasePointer, { passive: true });
+    window.addEventListener("pointercancel", () => (pointer.active = false));
+    document.documentElement.addEventListener("pointerleave", () => (pointer.active = false));
+    window.addEventListener("blur", () => (pointer.active = false));
+    window.addEventListener("resize", resize);
+
+    // Follow theme changes from the preview picker
+    new MutationObserver(readColors).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    readColors();
+    resize();
+    requestAnimationFrame(step);
+  }
+</script>
+
+<style>
+  .constellation {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+</style>
