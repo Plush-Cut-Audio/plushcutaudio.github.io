@@ -1019,18 +1019,13 @@ body:has(.vision) {
 .reading__close:focus-visible {
   color: var(--color-text);
 }
-.reading__title {
-  padding-right: 4rem; /* clears the Close button */
-  font-family: var(--font-display);
-  font-weight: var(--weight-display);
-  font-size: var(--text-lg);
-  letter-spacing: var(--tracking-display);
-  line-height: 1.2;
+.reading__photo {
+  margin-top: 1.75rem; /* clears the Close button */
 }
 .reading__body {
   display: grid;
   gap: 1rem;
-  margin-top: 1.25rem;
+  margin-top: 1.75rem; /* clears the Close button, or sits below the photo */
   color: var(--color-muted);
   line-height: 1.7;
 }

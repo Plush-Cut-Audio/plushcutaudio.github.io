@@ -132,18 +132,15 @@ export const services = [
      url                  optional. If set (and no reel), the card links out.
 --------------------------------------------------------------------------- */
 export const studioWork = [
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2026", disciplines: ["Music", "Sound Design"], image: IMG, reel: REEL },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2026", disciplines: ["Sound Design", "Technical"], image: IMG, reel: REEL },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", disciplines: ["Music"], image: IMG, reel: REEL },
+  { title: "ALL GOOD THINGS", studio: "Scheherazade Games", year: "2026", disciplines: ["Music", "Sound Design"], image: IMG, reel: REEL },
+  { title: "Coming Soon...", image: IMG},
 ];
 
 export const teamCredits = [
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", disciplines: ["Music"], members: ["TEMP NAME"], image: IMG },
+  { title: "Coming Soon...", image: IMG },
+  /* 
   { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", disciplines: ["Sound Design"], members: ["TEMP NAME", "TEMP NAME"], image: IMG },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2024", disciplines: ["Dialogue"], members: ["TEMP NAME"], image: IMG },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2024", disciplines: ["Technical"], members: ["TEMP NAME"], image: IMG },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2023", disciplines: ["Music", "Sound Design"], members: ["TEMP NAME"], image: IMG },
-  { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2023", disciplines: ["Sound Design"], members: ["TEMP NAME"], image: IMG },
+  */
 ];
 
 /* ---------------------------------------------------------------------------
@@ -245,6 +242,9 @@ export const about = {
   vision: "escape the clutter of the world",
   /** Typed after it one at a time, in this order, then repeating. */
   visionEndings: ["through sound", "with music", "through art", "with code"],
+  /** Optional team photo at the top of the "Read more" pop-up, e.g.
+   *  "/media/team-photo.jpg". Leave empty ("") for text only. */
+  photo: "",
   paragraphs: "Plush Cut Audio represents the next generation of bespoke sound. Founded by Ariel Sol in 2026, the collective formed from a group of Game Audio Network Guild awardees and Game Audio Diversity Alliance scholars on a mission to collaborate. From music to programming, artistry is our center."
 };
 

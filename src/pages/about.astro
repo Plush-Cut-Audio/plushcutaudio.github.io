@@ -90,10 +90,14 @@ const cut = first.lastIndexOf(" ") + 1;
   </script>
 
   <!-- The About text, opened by "Read more" above -->
-  <dialog class="reading" id="about-more" aria-labelledby="about-more-title" data-dialog>
+  <dialog class="reading" id="about-more" aria-label={`About ${site.name}`} data-dialog>
     <div class="reading__panel">
       <button class="reading__close" type="button" data-dialog-close>Close</button>
-      <h2 class="reading__title" id="about-more-title">About {site.name}</h2>
+      {about.photo && (
+        <span class="frame frame--landscape reading__photo">
+          <img src={about.photo} alt={`The ${site.name} team`} loading="lazy" />
+        </span>
+      )}
       <div class="reading__body">
         {paragraphs.map((p) => <p>{p}</p>)}
       </div>
