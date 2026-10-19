@@ -721,18 +721,21 @@ button:focus-visible .play__label {
 .member[hidden] {
   display: none;
 }
-.member__reel {
+.member__open {
   position: relative;
   display: block;
+  width: 100%;
+  padding: 0;
+  cursor: pointer;
 }
-/* "Watch reel" hint appears over the headshot on hover */
+/* "View profile" hint appears over the headshot on hover */
 .member__hint {
   position: absolute;
-  left: 0.9rem;
-  bottom: 0.8rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  padding: 0.2rem 0.65rem 0.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.55);
   color: #fff;
   font-size: var(--text-xs);
   letter-spacing: 0.02em;
@@ -742,13 +745,8 @@ button:focus-visible .play__label {
     opacity var(--duration) var(--ease),
     transform var(--duration) var(--ease);
 }
-.member__hint svg {
-  width: 0.55rem;
-  height: 0.55rem;
-  color: var(--color-accent);
-}
-.member__reel:hover .member__hint,
-.member__reel:focus-visible .member__hint {
+.member__open:hover .member__hint,
+.member__open:focus-visible .member__hint {
   opacity: 1;
   transform: none;
 }
@@ -772,6 +770,105 @@ button:focus-visible .play__label {
 @media (max-width: 900px) {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Profile pop-up: photo beside name, tags, bio, reel and website */
+.profile {
+  width: min(56rem, calc(100vw - 2 * var(--gutter)));
+  max-width: none;
+  max-height: calc(100svh - 2 * var(--gutter));
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-media);
+  background: var(--color-surface);
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.profile::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+.profile[open] {
+  animation: arrive 500ms var(--ease);
+}
+.profile__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: start;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+.profile__close {
+  position: absolute;
+  top: 0.75rem;
+  right: clamp(1.25rem, 3vw, 2.5rem);
+  padding: 0.5rem 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  transition: color var(--duration) var(--ease);
+}
+.profile__close:hover,
+.profile__close:focus-visible {
+  color: var(--color-text);
+}
+/* Long bios scroll; the photo stays in view beside them */
+.profile__photo {
+  position: sticky;
+  top: clamp(1.25rem, 3vw, 2.5rem); /* the panel's padding */
+}
+.profile__body {
+  padding-top: 1.75rem; /* clears the Close button */
+}
+.profile__name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.profile .tags {
+  margin-top: 0.9rem;
+}
+.profile__bio {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  color: var(--color-muted);
+  max-width: 60ch;
+}
+.profile__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-top: 1.75rem;
+}
+.profile__website {
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  transition: color var(--duration) var(--ease);
+}
+.profile__website:hover,
+.profile__website:focus-visible {
+  color: var(--color-accent);
+}
+
+/* Phones: stack, with a smaller photo so the bio is in view */
+@media (max-width: 640px) {
+  .profile__panel {
+    grid-template-columns: 1fr;
+  }
+  .profile__photo {
+    position: static;
+    width: min(60%, 14rem);
+  }
+  .profile__body {
+    padding-top: 0;
   }
 }
 

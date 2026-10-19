@@ -65,16 +65,34 @@ markTheme();
    - data-reel-inline  plays in place (the home page showreel)
    - otherwise         plays in the pop-up player
    If <body data-reel-mode="new-tab"> (set in site.ts), reels open in a
-   new browser tab instead. Works with video files, YouTube and Vimeo.
+   new browser tab instead. Plays video files, YouTube, Vimeo, Google Drive
+   and ReelCrafter on the page; any other link opens in a new tab.
 --------------------------------------------------------------------------- */
-function playerFor(src, title) {
+
+/** The embeddable player URL for a hosted reel, or null if it isn't one. */
+function embedUrl(src) {
   const yt = src.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
-  const vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (yt || vimeo) {
+  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0`;
+  // Unlisted Vimeo links carry a privacy hash after the id: vimeo.com/123/abc
+  const vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([\da-f]+))?/);
+  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1${vimeo[2] ? `&h=${vimeo[2]}` : ""}`;
+  // Drive files must be shared as "Anyone with the link"
+  const drive = src.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
+  if (/^https:\/\/play\.reelcrafter\.com\//.test(src)) return src;
+  return null;
+}
+
+const isVideoFile = (src) => src.startsWith("/") || /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(src);
+
+/** True if the reel can play on the page rather than in a new tab. */
+const playsHere = (src) => Boolean(embedUrl(src)) || isVideoFile(src);
+
+function playerFor(src, title) {
+  const embed = embedUrl(src);
+  if (embed) {
     const iframe = document.createElement("iframe");
-    iframe.src = yt
-      ? `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0`
-      : `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1`;
+    iframe.src = embed;
     iframe.allow = "autoplay; fullscreen; picture-in-picture";
     iframe.allowFullscreen = true;
     iframe.title = title || "Reel";
@@ -116,7 +134,7 @@ document.addEventListener("click", (e) => {
   if (!src) return;
   e.preventDefault();
   const title = link.dataset.reelTitle;
-  if (document.body.dataset.reelMode === "new-tab") {
+  if (document.body.dataset.reelMode === "new-tab" || !playsHere(src)) {
     window.open(src, "_blank", "noopener");
   } else if (link.hasAttribute("data-reel-inline")) {
     const frame = link.querySelector(".frame") || link;
@@ -127,6 +145,30 @@ document.addEventListener("click", (e) => {
     if (player.focus) player.focus();
   } else {
     openReel(src, title);
+  }
+});
+
+/* ---------------------------------------------------------------------------
+   Pop-ups (team profiles). A button with data-dialog-open="id" opens the
+   <dialog id="id">; data-dialog-close or a click outside the panel closes
+   it. A reel opened from inside plays on top, and closing it returns here.
+--------------------------------------------------------------------------- */
+document.addEventListener("click", (e) => {
+  const opener = e.target.closest("[data-dialog-open]");
+  if (opener) {
+    document.getElementById(opener.dataset.dialogOpen)?.showModal();
+    return;
+  }
+  if (e.target.closest("[data-dialog-close]")) {
+    e.target.closest("dialog")?.close();
+    return;
+  }
+  // Clicks on the backdrop land on the dialog itself, outside its box
+  const d = e.target;
+  if (d.matches?.("dialog[data-dialog][open]")) {
+    const r = d.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) d.close();
   }
 });
 

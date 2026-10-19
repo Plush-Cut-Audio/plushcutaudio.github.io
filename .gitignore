@@ -22,3 +22,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .claude/launch.json
+
+# full-size photos kept locally; the site uses the compressed copies in public/media
+headshot-originals/

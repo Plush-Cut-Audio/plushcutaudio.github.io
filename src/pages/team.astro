@@ -1,6 +1,11 @@
 ---
 import Base from "@/layouts/Base.astro";
+import PlayIcon from "@/components/PlayIcon.astro";
 import { team, DISCIPLINES } from "@/data/site";
+
+// "https://www.example.com/work" shows as "example.com/work"
+const displayUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+const paragraphs = (text = "") => text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 ---
 
 <Base title="Team">
@@ -17,19 +22,15 @@ import { team, DISCIPLINES } from "@/data/site";
     </div>
 
     <ul class="team-grid" data-team-grid>
-      {team.map((m) => (
+      {team.map((m, i) => (
         <li class="member" data-disciplines={m.disciplines.join("|")}>
-          <a class="member__reel" href={m.reel} data-reel-src={m.reel} data-reel-title={`${m.name}, reel`}>
+          <button class="member__open" type="button" data-dialog-open={`profile-${i}`} aria-haspopup="dialog">
             <span class="frame frame--portrait">
-              <img src={m.headshot} alt={`Portrait of ${m.name}`} loading="lazy" />
+              <img src={m.headshot} alt="" loading="lazy" />
             </span>
-            {m.reel && (
-              <span class="member__hint">
-                <svg viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0 10 6 0 12Z" fill="currentColor" /></svg>
-                Watch reel
-              </span>
-            )}
-          </a>
+            <span class="member__hint">View profile</span>
+            <span class="visually-hidden">{m.name}, view profile</span>
+          </button>
           <h2 class="member__name">{m.name}</h2>
           <ul class="tags" aria-label="Disciplines">
             {m.disciplines.map((d) => (
@@ -40,4 +41,43 @@ import { team, DISCIPLINES } from "@/data/site";
       ))}
     </ul>
   </div>
+
+  <!-- One profile pop-up per person. Opened by the headshot buttons above. -->
+  {team.map((m, i) => (
+    <dialog class="profile" id={`profile-${i}`} aria-labelledby={`profile-${i}-name`} data-dialog>
+      <div class="profile__panel">
+        <button class="profile__close" type="button" data-dialog-close>Close</button>
+        <span class="frame frame--portrait profile__photo">
+          <img src={m.headshot} alt={`Portrait of ${m.name}`} loading="lazy" />
+        </span>
+        <div class="profile__body">
+          <h2 class="profile__name" id={`profile-${i}-name`}>{m.name}</h2>
+          <ul class="tags" aria-label="Disciplines">
+            {m.disciplines.map((d) => (
+              <li class="tag">{d}</li>
+            ))}
+          </ul>
+          {m.bio && (
+            <div class="profile__bio">
+              {paragraphs(m.bio).map((p) => <p>{p}</p>)}
+            </div>
+          )}
+          {(m.reel || m.website) && (
+            <div class="profile__actions">
+              {m.reel && (
+                <a href={m.reel} data-reel-src={m.reel} data-reel-title={`${m.name}, reel`}>
+                  <PlayIcon label="Watch reel" />
+                </a>
+              )}
+              {m.website && (
+                <a class="profile__website" href={m.website} target="_blank" rel="noopener">
+                  {displayUrl(m.website)}<span aria-hidden="true"> ↗</span>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
 </Base>
