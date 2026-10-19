@@ -132,11 +132,12 @@ export const services = [
      url                  optional. If set (and no reel), the card links out.
 --------------------------------------------------------------------------- */
 export const studioWork = [
-  { title: "ALL GOOD THINGS", studio: "Scheherazade Games", year: "2026", disciplines: ["Music", "Sound Design"], image: IMG, reel: REEL },
-  { title: "Coming Soon...", image: IMG},
+  { title: "ALL GOOD THINGS", studio: "Scheherazade Games", year: "2026", image: "/media/projects/all-good-things.jpg", reel: "https://youtu.be/vgXo7YlZy9g" },
+  { title: "Coming Soon...", year: "2026", image: IMG},
 ];
 
 export const teamCredits = [
+  { title: "The Unrealtor", studio: "Homestyle Interactive", year: "2026", disciplines: ["Sound Design", "Technical"], members: ["Danny Castro", "Ariel Sol"], image: "/media/projects/the-unrealtor.jpg" },
   { title: "Coming Soon...", image: IMG },
   /* 
   { title: "TEMP PROJECT", studio: "TEMP STUDIO", year: "2025", disciplines: ["Sound Design"], members: ["TEMP NAME", "TEMP NAME"], image: IMG },

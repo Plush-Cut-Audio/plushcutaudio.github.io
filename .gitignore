@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # full-size photos kept locally; the site uses the compressed copies in public/media
 headshot-originals/
+
+# full-size project art kept locally; the site uses compressed copies in public/media/projects
+media-originals/
